@@ -8,7 +8,7 @@
 </a>
 
 <div class="table-responsive">
-    <table class="table table-striped table-hover table-responsive">
+    <table class="table table-striped table-hover table-responsive" id="myTable">
         <thead>
             <tr>
                 <th scope="col">ID</th>

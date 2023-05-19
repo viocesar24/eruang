@@ -100,16 +100,72 @@ class Peminjaman extends BaseController
 
         $model = model(PeminjamanModel::class);
 
-        $model->save([
-            'id_pegawai' => $post['id_pegawai'],
-            'id_ruangan' => $post['id_ruangan'],
-            'tanggal' => $post['tanggal'],
-            'waktu_mulai' => $post['waktu_mulai'],
-            'waktu_selesai'  => $post['waktu_selesai'],
-        ]);
+        // $model->save([
+        //     'id_pegawai' => $post['id_pegawai'],
+        //     'id_ruangan' => $post['id_ruangan'],
+        //     'tanggal' => $post['tanggal'],
+        //     'waktu_mulai' => $post['waktu_mulai'],
+        //     'waktu_selesai'  => $post['waktu_selesai'],
+        // ]);
 
-        return view('templates/header', ['title' => 'Buat ruangan'])
-            . view('peminjaman/success')
-            . view('templates/footer');
+        // return view('templates/header', ['title' => 'Buat ruangan'])
+        //     . view('peminjaman/success')
+        //     . view('templates/footer');
+
+        // Mengambil data waktu dari form
+        $id_ruangan = $post['id_ruangan'];
+        $tanggal = $post['tanggal'];
+        $waktu_mulai = $post['waktu_mulai'];
+        $waktu_selesai = $post['waktu_selesai'];
+
+        // Mengubah string waktu menjadi integer
+        $waktu_mulai_int = strtotime($waktu_mulai);
+        $waktu_selesai_int = strtotime($waktu_selesai);
+
+        // Membandingkan nilai waktu
+        if ($waktu_mulai_int >= $waktu_selesai_int) {
+            // Menampilkan pesan error jika waktu mulai lebih besar atau sama dengan waktu selesai
+            return view('templates/header', ['title' => 'Anda tidak berhasil meminjam ruangan, waktu selesai harus lebih besar dari waktu mulai'])
+                . view('peminjaman/success')
+                . view('templates/footer');
+        } else {
+            // Mengecek apakah ada data waktu yang tumpang tindih
+            $model = model(PeminjamanModel::class);
+            $result = $model->query("SELECT * FROM peminjaman WHERE id_ruangan = ? AND tanggal = ? AND (waktu_mulai BETWEEN ? AND ? OR waktu_selesai BETWEEN ? AND ?)", [$id_ruangan, $tanggal, $waktu_mulai, $waktu_selesai, $waktu_mulai, $waktu_selesai])->getResult();
+
+            // Jika tidak ada data waktu yang tumpang tindih
+            if (empty($result)) {
+                // Menyimpan data ke database
+                $model->save([
+                    'id_pegawai' => $post['id_pegawai'],
+                    'id_ruangan' => $id_ruangan,
+                    'tanggal' => $tanggal,
+                    'waktu_mulai' => $waktu_mulai,
+                    'waktu_selesai' => $waktu_selesai,
+                ]);
+
+                return view('templates/header', ['title' => 'Anda berhasil meminjam ruangan'])
+                    . view('peminjaman/success')
+                    . view('templates/footer');
+            } else {
+                // Menampilkan pesan error
+                return view('templates/header', ['title' => 'Anda tidak berhasil meminjam ruangan, waktu yang Anda pilih sudah terisi'])
+                    . view('peminjaman/success')
+                    . view('templates/footer');
+            }
+
+            // Menyimpan data ke database jika waktu mulai lebih kecil dari waktu selesai
+            // $model->save([
+            //     'id_pegawai' => $post['id_pegawai'],
+            //     'id_ruangan' => $post['id_ruangan'],
+            //     'tanggal' => $post['tanggal'],
+            //     'waktu_mulai' => $waktu_mulai,
+            //     'waktu_selesai' => $waktu_selesai,
+            // ]);
+
+            // return view('templates/header', ['title' => 'Anda berhasil meminjam ruangan'])
+            //     . view('peminjaman/success')
+            //     . view('templates/footer');
+        }
     }
 }
