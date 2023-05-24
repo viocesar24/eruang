@@ -8,7 +8,7 @@ class PeminjamanModel extends Model
 {
     protected $table = 'peminjaman';
 
-    protected $allowedFields = ['id_pegawai', 'id_ruangan', 'tanggal', 'waktu_mulai', 'waktu_selesai'];
+    protected $allowedFields = ['id_pegawai', 'id_ruangan', 'acara', 'tanggal', 'waktu_mulai', 'waktu_selesai'];
 
     public function getPeminjaman($id = false)
     {
@@ -36,5 +36,22 @@ class PeminjamanModel extends Model
 
         // Mengembalikan hasil query dalam bentuk array
         return $this->where(['peminjaman.id' => $id])->first();
+    }
+
+    public function getPeminjamanByUser($pegawaiId = null)
+    {
+        $pegawaiId = session()->get('pegawai_id');
+
+        if ($pegawaiId === false) {
+            return $this->findAll();
+        }
+
+        $this->select('peminjaman.*, pegawai.nama as nama_pegawai, ruangan.nama as nama_ruangan');
+
+        $this->join('pegawai', 'peminjaman.id_pegawai = pegawai.id');
+
+        $this->join('ruangan', 'peminjaman.id_ruangan = ruangan.id');
+
+        return $this->where(['peminjaman.id_pegawai' => $pegawaiId])->findAll();
     }
 }

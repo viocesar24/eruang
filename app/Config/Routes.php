@@ -35,18 +35,53 @@ use App\Controllers\Pegawai;
 use App\Controllers\Ruangan;
 use App\Controllers\Peminjaman;
 use App\Controllers\Pages;
+use App\Controllers\User;
+
+$routes->get('login', 'User::login');
+$routes->get('signup', 'User::signup');
+$routes->get('logout', 'User::logout');
+$routes->get('profile', 'User::profile');
+$routes->post('login', 'User::login');
+$routes->post('signup', 'User::signup');
+$routes->post('logout', 'User::logout');
+$routes->post('profile', 'User::profile');
+
+$routes->post('peminjaman/create/(:segment)', [Peminjaman::class, 'create']);
+$routes->post('peminjaman/create', [Peminjaman::class, 'create']);
+$routes->get('peminjaman/create/(:segment)', [Peminjaman::class, 'create']);
+$routes->get('peminjaman/create', [Peminjaman::class, 'create']);
+$routes->post('peminjaman/edit/(:segment)', [Peminjaman::class, 'edit']);
+$routes->post('peminjaman/edit', [Peminjaman::class, 'edit']);
+$routes->get('peminjaman/edit/(:segment)', [Peminjaman::class, 'edit']);
+$routes->get('peminjaman/edit', [Peminjaman::class, 'edit']);
+$routes->post('peminjaman/hapus/(:segment)', [Peminjaman::class, 'hapus']);
+$routes->post('peminjaman/hapus', [Peminjaman::class, 'hapus']);
+$routes->get('peminjaman/hapus/(:segment)', [Peminjaman::class, 'hapus']);
+$routes->get('peminjaman/hapus', [Peminjaman::class, 'hapus']);
 
 $routes->match(['get', 'post'], 'pegawai/create', [Pegawai::class, 'create']);
 $routes->match(['get', 'post'], 'ruangan/create', [Ruangan::class, 'create']);
 $routes->match(['get', 'post'], 'peminjaman/create', [Peminjaman::class, 'create']);
+$routes->match(['get', 'post'], 'user/login', [User::class, 'login']);
+$routes->match(['get', 'post'], 'user/signup', [User::class, 'signup']);
+$routes->match(['get', 'post'], 'user/logout', [User::class, 'logout']);
+$routes->match(['get', 'post'], 'user/profile', [User::class, 'profile']);
 $routes->get('pegawai/(:segment)', [Pegawai::class, 'view']);
 $routes->get('pegawai', [Pegawai::class, 'index']);
 $routes->get('ruangan/(:segment)', [Ruangan::class, 'view']);
 $routes->get('ruangan', [Ruangan::class, 'index']);
 $routes->get('peminjaman/(:segment)', [Peminjaman::class, 'view']);
 $routes->get('peminjaman', [Peminjaman::class, 'index']);
-$routes->get('pages', [Pages::class, 'index']);
-$routes->get('(:segment)', [Pages::class, 'view']);
+$routes->get('view/(:segment)', [Peminjaman::class, 'viewPeminjamanUser']);
+$routes->get('view', [Peminjaman::class, 'viewPeminjamanUser']);
+$routes->get('pages/(:segment)', [Pages::class, 'view']);
+$routes->get('pages', [Pages::class, 'view']);
+$routes->get('user/(:segment)', [User::class, 'view']);
+$routes->get('user', [User::class, 'index']);
+$routes->get('profile/(:segment)', [User::class, 'profile']);
+$routes->get('profile', [User::class, 'profile']);
+// $routes->get('pages', [Pages::class, 'index']);
+// $routes->get('(:segment)', [Pages::class, 'view']);
 /*
  * --------------------------------------------------------------------
  * Additional Routing
