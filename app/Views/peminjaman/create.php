@@ -42,22 +42,22 @@
 
     <div class="input-group mb-3">
         <span class="input-group-text">Detail Acara</span>
-        <textarea class="form-control" name="acara" aria-label="Detail Acara"></textarea>
+        <textarea class="form-control" name="acara" aria-label="Detail Acara" required></textarea>
     </div>
 
     <div class="input-group mb-3">
         <label for="birthday">Tanggal Peminjaman:</label>
-        <input type="date" id="birthday" name="tanggal" class="form-control">
+        <input type="date" id="birthday" name="tanggal" class="form-control" required>
     </div>
 
     <div class="input-group mb-3">
         <label for="waktu_mulai">Waktu Mulai:</label>
-        <input type="time" id="waktu_mulai" name="waktu_mulai" class="form-control">
+        <input type="time" id="waktu_mulai" name="waktu_mulai" class="form-control" required>
     </div>
 
     <div class="input-group mb-3">
         <label for="waktu_selesai">Waktu Selesai:</label>
-        <input type="time" id="waktu_selesai" name="waktu_selesai" class="form-control">
+        <input type="time" id="waktu_selesai" name="waktu_selesai" class="form-control" required>
     </div>
 
     <br>

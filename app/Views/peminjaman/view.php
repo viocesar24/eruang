@@ -97,20 +97,22 @@
                                                             Nama Pegawai</label>
                                                         <select name="id_pegawai" class="form-select" id="inputGroupSelect01">
                                                             <option name="id_pegawai"
-                                                                value="<?= esc($peminjaman_item['id_pegawai']) ?>"><?= esc($peminjaman_item['nama_pegawai']) ?></option>
+                                                                value="<?= esc($peminjaman_item['id_pegawai']) ?>" selected><?= esc($peminjaman_item['nama_pegawai']) ?></option>
                                                         </select>
                                                     </div>
 
                                                     <div class="input-group mb-3">
                                                         <label class="input-group-text" for="inputGroupSelect02">
                                                             Nama Ruangan</label>
-                                                        <select name="id_ruangan" class="form-select" id="inputGroupSelect02">
+                                                        <select name="id_ruangan" class="form-select" id="inputGroupSelect02"
+                                                            required>
                                                             <option name="id_ruangan"
-                                                                value="<?= esc($peminjaman_item['id_ruangan']) ?>"><?= esc($peminjaman_item['nama_ruangan']) ?></option>
-                                                            <option selected>Pilih...</option>
+                                                                value="<?= esc($peminjaman_item['id_ruangan']) ?>" selected><?= esc($peminjaman_item['nama_ruangan']) ?></option>
                                                             <?php if (!empty($ruangan) && is_array($ruangan)): ?>
                                                                 <?php foreach ($ruangan as $ruangan_item): ?>
-                                                                    <option name="id_ruangan" value="<?= esc($ruangan_item['id']) ?>"><?= esc($ruangan_item['nama']) ?></option>
+                                                                    <?php if ($ruangan_item['id'] != $peminjaman_item['id_ruangan']): ?>
+                                                                        <option name="id_ruangan" value="<?= esc($ruangan_item['id']) ?>"><?= esc($ruangan_item['nama']) ?></option>
+                                                                    <?php endif ?>
                                                                 <?php endforeach ?>
                                                             <?php else: ?>
                                                                 <h3>Tidak Ada Ruangan</h3>
@@ -121,26 +123,26 @@
 
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text">Detail Acara</span>
-                                                        <textarea class="form-control" name="acara"
-                                                            aria-label="Detail Acara"><?= esc($peminjaman_item['acara']) ?></textarea>
+                                                        <textarea class="form-control" name="acara" aria-label="Detail Acara"
+                                                            required><?= esc($peminjaman_item['acara']) ?></textarea>
                                                     </div>
 
                                                     <div class="input-group mb-3">
                                                         <label for="birthday">Tanggal Peminjaman:</label>
                                                         <input type="date" id="birthday" name="tanggal"
-                                                            value="<?= esc($peminjaman_item['tanggal']) ?>">
+                                                            value="<?= esc($peminjaman_item['tanggal']) ?>" required>
                                                     </div>
 
                                                     <div class="input-group mb-3">
                                                         <label for="waktu_mulai">Waktu Mulai:</label>
                                                         <input type="time" id="waktu_mulai" name="waktu_mulai"
-                                                            value="<?= esc($peminjaman_item['waktu_mulai']) ?>">
+                                                            value="<?= esc($peminjaman_item['waktu_mulai']) ?>" required>
                                                     </div>
 
                                                     <div class="input-group mb-3">
                                                         <label for="waktu_selesai">Waktu Selesai:</label>
                                                         <input type="time" id="waktu_selesai" name="waktu_selesai"
-                                                            value="<?= esc($peminjaman_item['waktu_selesai']) ?>">
+                                                            value="<?= esc($peminjaman_item['waktu_selesai']) ?>" required>
                                                     </div>
 
                                                     <!-- Mengakhiri input form -->
