@@ -11,7 +11,7 @@
 <?php endif; ?>
 
 <div class="text-center">
-    <main class="form-signin w-25 m-auto">
+    <main class="w-25 m-auto">
         <form action="/user/login" method="post">
             <?= csrf_field() ?>
             <img class="img-fluid" src="/E-RUANG.svg" alt="" width="250" height="250">
