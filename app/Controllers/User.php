@@ -8,6 +8,7 @@ use App\Models\UserModel;
 
 class User extends BaseController
 {
+
     public function index()
     {
         $userModel = new UserModel();
@@ -59,10 +60,11 @@ class User extends BaseController
                 // Login successful
                 session()->set('user_id', $user['id']);
                 session()->set('pegawai_id', $user['pegawai_id']);
+                session()->setFlashdata('loginBerhasil', 'Login Berhasil. Selamat Melakukan Booking Ruangan!');
                 return redirect()->to('/peminjaman');
             } else {
                 // Login failed
-                $data['error'] = 'Invalid username or password';
+                session()->setFlashdata('error', 'Username atau Password Salah.');
             }
         }
 
@@ -83,18 +85,27 @@ class User extends BaseController
             $pegawai_id = $this->request->getPost('pegawai_id');
 
             $userModel = new UserModel();
-            if (
-                $userModel->insert([
-                    'username' => $username,
-                    'password_hash' => password_hash($password, PASSWORD_DEFAULT),
-                    'pegawai_id' => $pegawai_id,
-                ])
-            ) {
-                // Signup successful
-                return redirect()->to('/login');
+            // Cek apakah username sudah digunakan
+            $user = $userModel->where('username', $username)->first();
+            if ($user) {
+                // Username sudah digunakan
+                session()->setFlashdata('error', 'Username Sudah Digunakan.');
             } else {
-                // Signup failed
-                $data['errors'] = $userModel->errors();
+                // Username belum digunakan
+                if (
+                    $userModel->insert([
+                        'username' => $username,
+                        'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+                        'pegawai_id' => $pegawai_id,
+                    ])
+                ) {
+                    // Signup successful
+                    session()->setFlashdata('signupBerhasil', 'Pendaftaran Berhasil. Silahkan Login dengan Memasukkan Username dan Password tadi.');
+                    return redirect()->to('/login');
+                } else {
+                    // Signup failed
+                    session()->setFlashdata('error', 'Item Peminjaman telah berhasil diubah.');
+                }
             }
         }
 

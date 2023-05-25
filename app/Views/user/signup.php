@@ -1,5 +1,14 @@
-<?= session()->getFlashdata('error') ?>
 <?= validation_list_errors() ?>
+
+<?php if (session()->has('signupBerhasil')): ?>
+    <div class="alert alert-success" role="alert">
+        <?= session()->getFlashdata('signupBerhasil') ?>
+    </div>
+<?php elseif (session()->has('error')): ?>
+    <div class="alert alert-warning" role="alert">
+        <?= session()->getFlashdata('error') ?>
+    </div>
+<?php endif; ?>
 
 <div class="container">
     <h1 class="text-center">Signup</h1>
@@ -7,15 +16,15 @@
         <?= csrf_field() ?>
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" name="username" class="form-control" id="username" placeholder="Username">
+            <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
         </div>
         <div class="mb-3">
             <label for="pegawai_id" class="form-label">Nama Pegawai</label>
-            <select name="pegawai_id" id="pegawai_id" class="form-select" aria-label="Default select example">
+            <select name="pegawai_id" id="pegawai_id" class="form-select" aria-label="Default select example" required>
                 <option selected>Pilih Nama Pegawai...</option>
                 <?php if (!empty($pegawai) && is_array($pegawai)): ?>
                     <?php foreach ($pegawai as $pegawai_item): ?>

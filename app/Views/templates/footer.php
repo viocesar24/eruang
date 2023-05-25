@@ -1,4 +1,3 @@
-<em>&copy; 2023</em>
 </div>
 <!-- Link ke file JavaScript jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -13,8 +12,8 @@
     $(document).ready(function () {
         // Initialize the DataTables plugin on the table with id "myTable"
         $('#myTable').DataTable({
-            columnDefs: [{ type: 'date', 'targets': [4] }],
-            order: [[4, 'desc']]
+            order: [[4, 'desc'], [5, 'desc']],
+            orderCellsTop: true
         });
     });
 </script>

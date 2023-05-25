@@ -1,10 +1,30 @@
 <?php if (session()->has('editBerhasil')): ?>
-    <div class="alert alert-success" role="alert">
-        <?= session()->getFlashdata('editBerhasil') ?>
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('editBerhasil') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php elseif (session()->has('editGagal')): ?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('editGagal') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php elseif (session()->has('hapusBerhasil')): ?>
-    <div class="alert alert-warning" role="alert">
-        <?= session()->getFlashdata('hapusBerhasil') ?>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('hapusBerhasil') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php elseif (session()->has('loginBerhasil')): ?>
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('loginBerhasil') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
 
@@ -12,14 +32,10 @@
     <?= esc($title) ?>
 </h2>
 
-<a href="/peminjaman/create/<?= esc(session()->get('pegawai_id'), 'url') ?>">
-    <button class="button button-primary">
-        <span class="button__icon"><i class="bx bx-plus"></i></span>
-        <span class="button__text2">Booking Ruangan</span>
-    </button>
-</a>
+<a class="btn btn-lg btn-info mb-3" href="/peminjaman/create/<?= esc(session()->get('pegawai_id'), 'url') ?>"
+    role="button">Booking Ruangan</a>
 
-<div class="table-responsive">
+<div class="table-responsive p-3">
     <table class="table table-striped table-hover table-responsive" id="myTable">
         <thead>
             <tr>
@@ -130,7 +146,8 @@
                                                     <div class="input-group mb-3">
                                                         <label for="birthday">Tanggal Peminjaman:</label>
                                                         <input type="date" id="birthday" name="tanggal"
-                                                            value="<?= esc($peminjaman_item['tanggal']) ?>" required>
+                                                            value="<?= esc($peminjaman_item['tanggal']) ?>"
+                                                            min="<?= date('Y-m-d') ?>" required>
                                                     </div>
 
                                                     <div class="input-group mb-3">

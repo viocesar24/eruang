@@ -89,19 +89,20 @@ class Peminjaman extends BaseController
 
         helper('form');
 
+        // Mengambil data dari tabel Pegawai dan Ruangan
+        $modelUser = model(UserModel::class);
+        $modelPegawai = model(PegawaiModel::class);
+        $modelRuangan = model(RuanganModel::class);
+
+        $data = [
+            'user' => $modelUser->getUserWithPegawai($id),
+            'pegawai' => $modelPegawai->getPegawai(),
+            'ruangan' => $modelRuangan->getRuangan(),
+            'title' => 'Buat ruangan',
+        ];
+
         // Checks whether the form is submitted.
         if (!$this->request->is('post')) {
-            // Mengambil data dari tabel Pegawai dan Ruangan
-            $modelUser = model(UserModel::class);
-            $modelPegawai = model(PegawaiModel::class);
-            $modelRuangan = model(RuanganModel::class);
-
-            $data = [
-                'user' => $modelUser->getUserWithPegawai($id),
-                'pegawai' => $modelPegawai->getPegawai(),
-                'ruangan' => $modelRuangan->getRuangan(),
-                'title' => 'Buat ruangan',
-            ];
             // The form is not submitted, so returns the form.
             return view('templates/header', $data)
                 . view('peminjaman/create')
@@ -115,23 +116,12 @@ class Peminjaman extends BaseController
             !$this->validateData($post, [
                 'id_pegawai' => 'required',
                 'id_ruangan' => 'required',
-                'tanggal' => 'required',
                 'acara' => 'required',
+                'tanggal' => 'required',
                 'waktu_mulai' => 'required',
                 'waktu_selesai' => 'required',
             ])
         ) {
-            // Mengambil data dari tabel Pegawai dan Ruangan
-            $modelUser = model(UserModel::class);
-            $modelPegawai = model(PegawaiModel::class);
-            $modelRuangan = model(RuanganModel::class);
-
-            $data = [
-                'user' => $modelUser->getUserWithPegawai($id),
-                'pegawai' => $modelPegawai->getPegawai(),
-                'ruangan' => $modelRuangan->getRuangan(),
-                'title' => 'Buat ruangan',
-            ];
             // The validation fails, so returns the form.
             return view('templates/header', $data)
                 . view('peminjaman/create')
@@ -154,8 +144,9 @@ class Peminjaman extends BaseController
         // Membandingkan nilai waktu
         if ($waktu_mulai_int >= $waktu_selesai_int) {
             // Menampilkan pesan error jika waktu mulai lebih besar atau sama dengan waktu selesai
-            return view('templates/header', ['title' => 'Anda tidak berhasil meminjam ruangan, waktu selesai harus lebih besar dari waktu mulai'])
-                . view('peminjaman/success')
+            session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu Selesai Harus Lebih Besar dari Waktu Mulai.');
+            return view('templates/header', $data)
+                . view('peminjaman/create')
                 . view('templates/footer');
         } else {
             // Mengecek apakah ada data waktu yang tumpang tindih
@@ -168,56 +159,122 @@ class Peminjaman extends BaseController
                 $model->save([
                     'id_pegawai' => $post['id_pegawai'],
                     'id_ruangan' => $id_ruangan,
-                    'tanggal' => $tanggal,
                     'acara' => $acara,
+                    'tanggal' => $tanggal,
                     'waktu_mulai' => $waktu_mulai,
                     'waktu_selesai' => $waktu_selesai,
                 ]);
 
-                return view('templates/header', ['title' => 'Anda berhasil meminjam ruangan'])
-                    . view('peminjaman/success')
+                session()->setFlashdata('pinjamBerhasil', 'Anda Berhasil Meminjam Ruangan!');
+                return view('templates/header', $data)
+                    . view('peminjaman/create')
                     . view('templates/footer');
             } else {
                 // Menampilkan pesan error
-                return view('templates/header', ['title' => 'Anda tidak berhasil meminjam ruangan, waktu yang Anda pilih sudah terisi'])
-                    . view('peminjaman/success')
+                session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu yang Anda Pilih Sudah Terisi.');
+                return view('templates/header', $data)
+                    . view('peminjaman/create')
                     . view('templates/footer');
             }
         }
     }
 
+    // fungsi edit yang digunakan untuk mengedit data peminjaman ruangan
     public function edit()
     {
+        // Fungsi ini memeriksa apakah pengguna sudah masuk atau belum. 
+        // Jika belum, pengguna akan diarahkan ke halaman login. 
+        // Jika sudah masuk, fungsi ini akan memuat data pengguna, pegawai, dan ruangan dari model yang sesuai dan menampilkannya di halaman pembuatan peminjaman.
+        if (!session()->get('user_id')) {
+            return redirect()->to('/login');
+        }
+
         helper('form');
 
-        $model = model(PeminjamanModel::class);
+        // Mengambil data dari tabel Pegawai dan Ruangan
+        $modelUser = model(UserModel::class);
+        $modelPegawai = model(PegawaiModel::class);
+        $modelRuangan = model(RuanganModel::class);
 
+        $data = [
+            'user' => $modelUser->getUserWithPegawai(esc(session()->get('pegawai_id'))),
+            'pegawai' => $modelPegawai->getPegawai(),
+            'ruangan' => $modelRuangan->getRuangan(),
+            'title' => 'Buat ruangan',
+        ];
+
+        // Checks whether the form is submitted.
+        if (!$this->request->is('post')) {
+            // The form is not submitted, so returns the form.
+            return view('templates/header', $data)
+                . view('peminjaman/create')
+                . view('templates/footer');
+        }
+
+        $post = $this->request->getPost(['id', 'id_pegawai', 'id_ruangan', 'tanggal', 'acara', 'waktu_mulai', 'waktu_selesai']);
+
+        // Checks whether the submitted data passed the validation rules.
         if (
-            $this->request->getMethod() === 'post' && $this->validate([
-                'id' => 'min_length[0]',
+            !$this->validateData($post, [
                 'id_pegawai' => 'required',
                 'id_ruangan' => 'required',
-                'tanggal' => 'required',
                 'acara' => 'required',
+                'tanggal' => 'required',
                 'waktu_mulai' => 'required',
                 'waktu_selesai' => 'required',
             ])
         ) {
-            $model->replace([
-                'id' => $this->request->getPost('id'),
-                'id_pegawai' => $this->request->getPost('id_pegawai'),
-                'id_ruangan' => $this->request->getPost('id_ruangan'),
-                'tanggal' => $this->request->getPost('tanggal'),
-                'acara' => $this->request->getPost('acara'),
-                'waktu_mulai' => $this->request->getPost('waktu_mulai'),
-                'waktu_selesai' => $this->request->getPost('waktu_selesai'),
-            ]);
+            // The validation fails, so returns the form.
+            return view('templates/header', $data)
+                . view('peminjaman/create')
+                . view('templates/footer');
+        }
 
-            $this->session->setFlashdata('editBerhasil', 'Item Peminjaman telah berhasil diubah.');
+        $model = model(PeminjamanModel::class);
 
+        // Mengambil data waktu dari form
+        $id = $post['id'];
+        $id_pegawai = $post['id_pegawai'];
+        $id_ruangan = $post['id_ruangan'];
+        $tanggal = $post['tanggal'];
+        $acara = $post['acara'];
+        $waktu_mulai = $post['waktu_mulai'];
+        $waktu_selesai = $post['waktu_selesai'];
+
+        // Mengubah string waktu menjadi integer
+        $waktu_mulai_int = strtotime($waktu_mulai);
+        $waktu_selesai_int = strtotime($waktu_selesai);
+
+        // Membandingkan nilai waktu
+        if ($waktu_mulai_int >= $waktu_selesai_int) {
+            // Menampilkan pesan error jika waktu mulai lebih besar atau sama dengan waktu selesai
+            session()->setFlashdata('editGagal', 'Anda Tidak Berhasil Mengedit, Waktu Selesai Harus Lebih Besar dari Waktu Mulai.');
             return redirect()->back();
         } else {
-            return redirect()->back();
+            // Mengecek apakah ada data waktu yang tumpang tindih
+            $model = model(PeminjamanModel::class);
+            $result = $model->query("SELECT * FROM peminjaman WHERE id_ruangan = ? AND tanggal = ? AND (waktu_mulai BETWEEN ? AND ? OR waktu_selesai BETWEEN ? AND ?) AND id != ?", [$id_ruangan, $tanggal, $waktu_mulai, $waktu_selesai, $waktu_mulai, $waktu_selesai, $id])->getResult();
+
+            // Jika tidak ada data waktu yang tumpang tindih
+            if (empty($result)) {
+                // Menyimpan data ke database
+                $model->replace([
+                    'id' => $id,
+                    'id_pegawai' => $id_pegawai,
+                    'id_ruangan' => $id_ruangan,
+                    'acara' => $acara,
+                    'tanggal' => $tanggal,
+                    'waktu_mulai' => $waktu_mulai,
+                    'waktu_selesai' => $waktu_selesai,
+                ]);
+
+                session()->setFlashdata('editBerhasil', 'Anda Berhasil Mengedit!');
+                return redirect()->back();
+            } else {
+                // Menampilkan pesan error
+                session()->setFlashdata('editGagal', 'Anda Tidak Berhasil Mengedit, Waktu yang Anda Pilih Sudah Terisi.');
+                return redirect()->back();
+            }
         }
     }
 

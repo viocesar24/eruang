@@ -20,7 +20,11 @@
             text-align: center;
             /* Animasi fade-in dan fade-out */
             animation-name: fadeInOut;
-            animation-duration: 5s;
+            animation-duration: 10s;
+            /* Menambahkan kode untuk memposisikan konten di tengah-tengah layar */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Keyframes untuk animasi fade-in dan fade-out */
@@ -52,7 +56,7 @@
     <!-- Splash screen -->
     <div id="splash-screen">
         <!-- <h1>Selamat Datang di E-Ruang</h1> -->
-        <img src="/splash_screen.webp" class="img-fluid" alt="Splash Screen">
+        <img src="/E-RUANG.svg" class="img-fluid" alt="Splash Screen">
     </div>
     <script>
         // Fungsi untuk mengarahkan pengguna ke halaman /peminjaman/
@@ -68,7 +72,7 @@
         }
 
         // Mengatur splash screen untuk diakhiri setelah 4 detik
-        var splashScreenTimeout = setTimeout(redirectToPeminjaman, 5000);
+        var splashScreenTimeout = setTimeout(redirectToPeminjaman, 10000);
 
         // Menambahkan event listener untuk mengakhiri splash screen ketika pengguna melakukan klik kiri pada layar
         document.addEventListener("click", endSplashScreen);

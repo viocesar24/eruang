@@ -1,12 +1,18 @@
-<h2 class="mt-4">
-    <?= esc($title) ?>
-</h2>
-
-<?php if (session()->getFlashdata('error')): ?>
-    <div class="alert alert-danger">
-        <?= session()->getFlashdata('error') ?>
+<?php if (session()->has('pinjamBerhasil')): ?>
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('pinjamBerhasil') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-<?php endif ?>
+<?php elseif (session()->has('pinjamGagal')): ?>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('pinjamGagal') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
 
 <?php if (validation_errors()): ?>
     <div class="alert alert-danger">
