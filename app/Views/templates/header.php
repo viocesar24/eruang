@@ -12,39 +12,49 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="/peminjaman">
-                <img src="/E-RUANG-LOGO.svg" alt="Logo" width="50" height="50" class="d-inline-block align-text-top"></a>
+                <img src="/E-RUANG-LOGO.svg" alt="Logo" width="50" height="50"
+                    class="d-inline-block align-text-top"></a>
             <a class="navbar-brand" href="/peminjaman">E-RUANG</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/peminjaman">Beranda</a>
-                    </li>
-                    <?php if (session()->get('user_id') !== null): ?>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">E-RUANG</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link" href="/view/<?= esc(session()->get('pegawai_id'), 'url') ?>">Peminjaman</a>
+                            <a class="nav-link active" aria-current="page" href="/peminjaman">Beranda</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/profile/<?= esc(session()->get('pegawai_id'), 'url') ?>">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout">Log Out</a>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/signup">Sign Up</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login">Login</a>
-                        </li>
-                    <?php endif; ?>
-                </ul>
+                        <?php if (session()->get('user_id') !== null): ?>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                    href="/view/<?= esc(session()->get('pegawai_id'), 'url') ?>">Peminjaman</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                    href="/profile/<?= esc(session()->get('pegawai_id'), 'url') ?>">Profil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Keluar</a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/signup">Daftar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">Masuk</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>

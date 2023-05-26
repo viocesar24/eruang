@@ -166,9 +166,7 @@ class Peminjaman extends BaseController
                 ]);
 
                 session()->setFlashdata('pinjamBerhasil', 'Anda Berhasil Meminjam Ruangan!');
-                return view('templates/header', $data)
-                    . view('peminjaman/create')
-                    . view('templates/footer');
+                return redirect()->to('/view' . '/' . esc(session()->get('pegawai_id'), 'url'));
             } else {
                 // Menampilkan pesan error
                 session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu yang Anda Pilih Sudah Terisi.');

@@ -26,6 +26,20 @@
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+<?php elseif (session()->has('pinjamBerhasil')): ?>
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('pinjamBerhasil') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php elseif (session()->has('pinjamGagal')): ?>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('pinjamGagal') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 <?php endif; ?>
 
 <h2>
@@ -33,7 +47,7 @@
 </h2>
 
 <a class="btn btn-lg btn-info mb-3" href="/peminjaman/create/<?= esc(session()->get('pegawai_id'), 'url') ?>"
-    role="button">Booking Ruangan</a>
+    role="button">Pinjam Ruangan</a>
 
 <div class="table-responsive p-3">
     <table class="table table-striped table-hover table-responsive" id="myTable">
@@ -46,8 +60,7 @@
                 <th scope="col">Tanggal</th>
                 <th scope="col">Waktu Mulai</th>
                 <th scope="col">Waktu Selesai</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Hapus</th>
+                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -79,14 +92,21 @@
                             <?php if (session()->get('pegawai_id') === esc($peminjaman_item['id_pegawai'])) { ?>
                                 <?= session()->getFlashdata('error') ?>
                                 <?= validation_list_errors() ?>
-
-                                <form action="/peminjaman/edit" method="post">
-                                    <?= csrf_field() ?>
+                                <div class="btn-group" role="group" aria-label="Login-SignUp">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary btn-sm btn-warning" data-bs-toggle="modal"
                                         data-bs-target="#modalEdit<?= esc($peminjaman_item['id']) ?>">
                                         Edit
                                     </button>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary btn-sm btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#modalHapus<?= esc($peminjaman_item['id']) ?>">
+                                        Hapus
+                                    </button>
+                                </div>
+                                <!-- Form Modal -->
+                                <form action="/peminjaman/edit" method="post">
+                                    <?= csrf_field() ?>
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalEdit<?= esc($peminjaman_item['id']) ?>" tabindex="-1"
                                         aria-labelledby="exampleModalLabelEdit<?= esc($peminjaman_item['id']) ?>"
@@ -173,20 +193,8 @@
                                         </div>
                                     </div>
                                 </form>
-                            <?php } ?>
-                        </td>
-                        <td>
-                            <?php if (session()->get('pegawai_id') === esc($peminjaman_item['id_pegawai'])) { ?>
-                                <?= session()->getFlashdata('error') ?>
-                                <?= validation_list_errors() ?>
-
                                 <form action="/peminjaman/hapus" method="post">
-                                    <!-- Button trigger modal -->
                                     <?= csrf_field() ?>
-                                    <button type="button" class="btn btn-primary btn-sm btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#modalHapus<?= esc($peminjaman_item['id']) ?>">
-                                        Hapus
-                                    </button>
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalHapus<?= esc($peminjaman_item['id']) ?>" tabindex="-1"
                                         aria-labelledby="exampleModalLabelHapus<?= esc($peminjaman_item['id']) ?>"
@@ -196,18 +204,15 @@
                                                 <div class="modal-header">
                                                     <h1 class="modal-title fs-5"
                                                         id="exampleModalLabelHapus<?= esc($peminjaman_item['id']) ?>">Hapus
-                                                        Peminjaman
-                                                        <?= esc($peminjaman_item['id']) ?></h1>
+                                                        Peminjaman </h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body text-center">
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="hapusID">Hapus Item Peminjaman ID:</span>
-                                                        <input type="text" class="form-control text-center" placeholder="ID"
-                                                            aria-label="ID" aria-describedby="hapusID" name="id"
-                                                            value="<?= esc($peminjaman_item['id']) ?>" readonly>
-                                                    </div>
+                                                    <h2>Apakah Anda Yakin?</h2>
+                                                    <input type="hidden" class="form-control text-center" placeholder="ID"
+                                                        aria-label="ID" aria-describedby="hapusID" name="id"
+                                                        value="<?= esc($peminjaman_item['id']) ?>" readonly>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"

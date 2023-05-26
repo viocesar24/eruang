@@ -10,27 +10,31 @@
     </div>
 <?php endif; ?>
 
-<div class="text-center">
-    <main class="w-25 m-auto">
-        <form action="/user/login" method="post">
-            <?= csrf_field() ?>
-            <img class="img-fluid" src="/E-RUANG.svg" alt="" width="250" height="250">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <form action="/user/login" method="post">
+                <?= csrf_field() ?>
+                <img class="img-fluid" src="/E-RUANG.svg" alt="" width="250" height="250">
+                <h1 class="h3 mb-3 fw-normal">Silahkan Masuk</h1>
 
-            <div class="form-floating mb-3">
-                <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
-                <label for="username">Username</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="password" name="password" class="form-control" id="password" placeholder="Password"
-                    required>
-                <label for="password">Password</label>
-            </div>
-            <div class="btn-group" role="group" aria-label="Login-SignUp">
-                <button type="submit" class="btn btn-lg btn-primary mb-3">Login</button>
-                <a class="btn btn-lg btn-secondary mb-3" href="/signup" role="button">Sign Up</a>
-            </div>
-            <p class="mt-5 mb-3 text-body-secondary">&copy; 2023–2023</p>
-        </form>
-    </main>
+                <div class="form-floating mb-3">
+                    <input type="text" name="username" class="form-control" id="username" placeholder="Username"
+                        required>
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Kata Sandi"
+                        required>
+                    <label for="password">Kata Sandi</label>
+                </div>
+                <div class="btn-group" role="group" aria-label="Login-SignUp">
+                    <button type="submit" class="btn btn-lg btn-primary mb-3">Masuk</button>
+                    <a class="btn btn-lg btn-secondary mb-3" href="/signup" role="button">Daftar</a>
+                </div>
+            </form>
+        </div>
+        <div class="col-1"></div>
+    </div>
 </div>

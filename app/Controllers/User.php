@@ -60,7 +60,7 @@ class User extends BaseController
                 // Login successful
                 session()->set('user_id', $user['id']);
                 session()->set('pegawai_id', $user['pegawai_id']);
-                session()->setFlashdata('loginBerhasil', 'Login Berhasil. Selamat Melakukan Booking Ruangan!');
+                session()->setFlashdata('loginBerhasil', 'Anda Berhasil Masuk. Selamat Melakukan Booking Ruangan!');
                 return redirect()->to('/peminjaman');
             } else {
                 // Login failed
@@ -100,7 +100,7 @@ class User extends BaseController
                     ])
                 ) {
                     // Signup successful
-                    session()->setFlashdata('signupBerhasil', 'Pendaftaran Berhasil. Silahkan Login dengan Memasukkan Username dan Password tadi.');
+                    session()->setFlashdata('signupBerhasil', 'Pendaftaran Berhasil. Silahkan Masuk dengan Memasukkan Username dan Kata Sandi Anda.');
                     return redirect()->to('/login');
                 } else {
                     // Signup failed
