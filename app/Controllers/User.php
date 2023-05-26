@@ -46,6 +46,10 @@ class User extends BaseController
 
     public function login()
     {
+        if (session()->get('user_id') !== null) {
+            return redirect()->to('/peminjaman');
+        }
+
         helper('form');
 
         $data = [];
@@ -75,6 +79,10 @@ class User extends BaseController
 
     public function signup()
     {
+        if (session()->get('user_id') !== null) {
+            return redirect()->to('/peminjaman');
+        }
+
         helper('form');
 
         $data = [];
