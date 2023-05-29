@@ -72,7 +72,7 @@
         }
 
         // Mengatur splash screen untuk diakhiri setelah 4 detik
-        var splashScreenTimeout = setTimeout(redirectToPeminjaman, 10000);
+        var splashScreenTimeout = setTimeout(redirectToPeminjaman, 9000);
 
         // Menambahkan event listener untuk mengakhiri splash screen ketika pengguna melakukan klik kiri pada layar
         document.addEventListener("click", endSplashScreen);

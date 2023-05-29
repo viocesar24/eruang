@@ -155,18 +155,31 @@ class Peminjaman extends BaseController
 
             // Jika tidak ada data waktu yang tumpang tindih
             if (empty($result)) {
-                // Menyimpan data ke database
-                $model->save([
-                    'id_pegawai' => $post['id_pegawai'],
-                    'id_ruangan' => $id_ruangan,
-                    'acara' => $acara,
-                    'tanggal' => $tanggal,
-                    'waktu_mulai' => $waktu_mulai,
-                    'waktu_selesai' => $waktu_selesai,
-                ]);
+                // Mendapatkan tanggal dan waktu sekarang
+                $tanggal_sekarang = date("Y-m-d");
+                $waktu_sekarang = date("H:i:s");
 
-                session()->setFlashdata('pinjamBerhasil', 'Anda Berhasil Meminjam Ruangan!');
-                return redirect()->to('/view' . '/' . esc(session()->get('pegawai_id'), 'url'));
+                // Membandingkan data waktu dengan tanggal dan waktu sekarang
+                if ($tanggal < $tanggal_sekarang || ($tanggal == $tanggal_sekarang && ($waktu_mulai < $waktu_sekarang || $waktu_selesai < $waktu_sekarang))) {
+                    // Menampilkan pesan error jika data waktu kurang dari tanggal dan waktu sekarang
+                    session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
+                    return view('templates/header', $data)
+                        . view('peminjaman/create')
+                        . view('templates/footer');
+                } else {
+                    // Menyimpan data ke database
+                    $model->save([
+                        'id_pegawai' => $post['id_pegawai'],
+                        'id_ruangan' => $id_ruangan,
+                        'acara' => $acara,
+                        'tanggal' => $tanggal,
+                        'waktu_mulai' => $waktu_mulai,
+                        'waktu_selesai' => $waktu_selesai,
+                    ]);
+
+                    session()->setFlashdata('pinjamBerhasil', 'Anda Berhasil Meminjam Ruangan!');
+                    return redirect()->to('/view' . '/' . esc(session()->get('pegawai_id'), 'url'));
+                }
             } else {
                 // Menampilkan pesan error
                 session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu yang Anda Pilih Sudah Terisi.');
@@ -255,19 +268,32 @@ class Peminjaman extends BaseController
 
             // Jika tidak ada data waktu yang tumpang tindih
             if (empty($result)) {
-                // Menyimpan data ke database
-                $model->replace([
-                    'id' => $id,
-                    'id_pegawai' => $id_pegawai,
-                    'id_ruangan' => $id_ruangan,
-                    'acara' => $acara,
-                    'tanggal' => $tanggal,
-                    'waktu_mulai' => $waktu_mulai,
-                    'waktu_selesai' => $waktu_selesai,
-                ]);
+                // Mendapatkan tanggal dan waktu sekarang
+                $tanggal_sekarang = date("Y-m-d");
+                $waktu_sekarang = strtotime(date("H:i:s"));
 
-                session()->setFlashdata('editBerhasil', 'Anda Berhasil Mengedit!');
-                return redirect()->back();
+                // Membandingkan data waktu dengan tanggal dan waktu sekarang
+                if ($tanggal <= $tanggal_sekarang && $waktu_mulai_int <= $waktu_sekarang) {
+                    // Menampilkan pesan error jika data waktu kurang dari tanggal dan waktu sekarang
+                    session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
+                    return view('templates/header', $data)
+                        . view('peminjaman/create')
+                        . view('templates/footer');
+                } else {
+                    // Menyimpan data ke database
+                    $model->replace([
+                        'id' => $id,
+                        'id_pegawai' => $id_pegawai,
+                        'id_ruangan' => $id_ruangan,
+                        'acara' => $acara,
+                        'tanggal' => $tanggal,
+                        'waktu_mulai' => $waktu_mulai,
+                        'waktu_selesai' => $waktu_selesai,
+                    ]);
+
+                    session()->setFlashdata('editBerhasil', 'Anda Berhasil Mengedit!');
+                    return redirect()->back();
+                }
             } else {
                 // Menampilkan pesan error
                 session()->setFlashdata('editGagal', 'Anda Tidak Berhasil Mengedit, Waktu yang Anda Pilih Sudah Terisi.');

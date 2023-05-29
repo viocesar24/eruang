@@ -6,9 +6,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php elseif (session()->has('pinjamGagal')): ?>
-    <div class="alert alert-warning alert-dismissible" role="alert">
+    <div class="alert alert-danger alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('pinjamGagal') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php elseif (session()->has('error')): ?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('error') ?>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -51,7 +58,7 @@
                     required></textarea>
 
                 <input type="text" id="birthday" name="tanggal" class="form-control mb-3" placeholder="Tanggal Acara"
-                    onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" required>
+                    onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" min="<?= date('Y-m-d') ?>" required>
 
                 <input type="text" id="waktu_mulai" name="waktu_mulai" class="form-control mb-3"
                     placeholder="Waktu Mulai Acara" onfocus="(this.type='time')"

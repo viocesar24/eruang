@@ -12,25 +12,27 @@ class User extends BaseController
     public function index()
     {
         $userModel = new UserModel();
-        $user_id = session()->get('user_id');
-        $user = $userModel->find($user_id);
+        $user = $userModel->getUser();
 
         if (empty($user)) {
             // User is not logged in, redirect to login page
-            return redirect()->to('/login');
+            return redirect()->to('/peminjaman');
         }
 
-        $data['user'] = $user;
+        $data = [
+            'user' => $user,
+            'title' => 'Daftar User:',
+        ];
 
         return view('templates/header', $data)
-            . view('user/profile', $data)
+            . view('user/view')
             . view('templates/footer');
     }
 
     public function profile($id = null)
     {
         $model = model(UserModel::class);
-
+        $id = session()->get('user_id');
         $data['user'] = $model->getUserWithPegawai($id);
 
         if (empty($data['user'])) {
@@ -93,11 +95,15 @@ class User extends BaseController
             $pegawai_id = $this->request->getPost('pegawai_id');
 
             $userModel = new UserModel();
-            // Cek apakah username sudah digunakan
+            // Cek apakah username dan nama pegawai sudah digunakan
             $user = $userModel->where('username', $username)->first();
+            $userIDPegawai = $userModel->where('pegawai_id', $pegawai_id)->first();
             if ($user) {
                 // Username sudah digunakan
                 session()->setFlashdata('error', 'Username Sudah Digunakan.');
+            } elseif ($userIDPegawai) {
+                // ID Pegawai sudah digunakan
+                session()->setFlashdata('error', 'Nama Pegawai Sudah Digunakan.');
             } else {
                 // Username belum digunakan
                 if (

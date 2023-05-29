@@ -80,8 +80,9 @@ $routes->get('user/(:segment)', [User::class, 'view']);
 $routes->get('user', [User::class, 'index']);
 $routes->get('profile/(:segment)', [User::class, 'profile']);
 $routes->get('profile', [User::class, 'profile']);
-// $routes->get('pages', [Pages::class, 'index']);
-// $routes->get('(:segment)', [Pages::class, 'view']);
+$routes->get('view/(:segment)', [User::class, 'view']);
+$routes->get('view', [User::class, 'index']);
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
