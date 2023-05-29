@@ -3,42 +3,42 @@
         <div>
             <?= session()->getFlashdata('editBerhasil') ?>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
 <?php elseif (session()->has('editGagal')): ?>
     <div class="alert alert-danger alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('editGagal') ?>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
 <?php elseif (session()->has('hapusBerhasil')): ?>
     <div class="alert alert-warning alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('hapusBerhasil') ?>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
 <?php elseif (session()->has('loginBerhasil')): ?>
     <div class="alert alert-success alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('loginBerhasil') ?>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
 <?php elseif (session()->has('pinjamBerhasil')): ?>
     <div class="alert alert-success alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('pinjamBerhasil') ?>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
 <?php elseif (session()->has('pinjamGagal')): ?>
     <div class="alert alert-warning alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('pinjamGagal') ?>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
 <?php endif; ?>
 
@@ -92,18 +92,16 @@
                             <?php if (session()->get('pegawai_id') === esc($peminjaman_item['id_pegawai'])) { ?>
                                 <?= session()->getFlashdata('error') ?>
                                 <?= validation_list_errors() ?>
-                                <div class="btn-group" role="group" aria-label="Login-SignUp">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary btn-sm btn-warning" data-bs-toggle="modal"
-                                        data-bs-target="#modalEdit<?= esc($peminjaman_item['id']) ?>">
-                                        Edit
-                                    </button>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary btn-sm btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#modalHapus<?= esc($peminjaman_item['id']) ?>">
-                                        Hapus
-                                    </button>
-                                </div>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#modalEdit<?= esc($peminjaman_item['id']) ?>">
+                                    Edit
+                                </button>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#modalHapus<?= esc($peminjaman_item['id']) ?>">
+                                    Hapus
+                                </button>
                                 <!-- Form Modal -->
                                 <form action="/peminjaman/edit" method="post">
                                     <?= csrf_field() ?>
@@ -118,7 +116,7 @@
                                                         id="exampleModalLabelEdit<?= esc($peminjaman_item['id']) ?>">Edit Peminjaman
                                                         <?= esc($peminjaman_item['id']) ?></h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                        aria-label="Tutup"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Memulai input form -->
@@ -186,7 +184,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
+                                                        data-bs-dismiss="modal">Tutup</button>
                                                     <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                                                 </div>
                                             </div>
@@ -206,7 +204,7 @@
                                                         id="exampleModalLabelHapus<?= esc($peminjaman_item['id']) ?>">Hapus
                                                         Peminjaman </h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                        aria-label="Tutup"></button>
                                                 </div>
                                                 <div class="modal-body text-center">
                                                     <h2>Apakah Anda Yakin?</h2>
@@ -216,7 +214,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
+                                                        data-bs-dismiss="modal">Tutup</button>
                                                     <button type="submit" class="btn btn-primary">Hapus</button>
                                                 </div>
                                             </div>

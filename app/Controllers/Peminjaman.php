@@ -276,9 +276,7 @@ class Peminjaman extends BaseController
                 if ($tanggal <= $tanggal_sekarang && $waktu_mulai_int <= $waktu_sekarang) {
                     // Menampilkan pesan error jika data waktu kurang dari tanggal dan waktu sekarang
                     session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
-                    return view('templates/header', $data)
-                        . view('peminjaman/create')
-                        . view('templates/footer');
+                    return redirect()->back();
                 } else {
                     // Menyimpan data ke database
                     $model->replace([
