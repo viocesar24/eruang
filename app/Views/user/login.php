@@ -10,31 +10,54 @@
     </div>
 <?php endif; ?>
 
-<div class="container text-center">
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <form action="/user/login" method="post">
-                <?= csrf_field() ?>
-                <img class="img-fluid" src="/E-RUANG.svg" alt="" width="250" height="250">
-                <h1 class="h3 mb-3 fw-normal">Silahkan Masuk</h1>
+<div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+            <div class="card" style="border-radius: 1rem;">
+                <div class="row g-0">
+                    <div class="col-md-6 col-lg-5 d-none d-md-block">
+                        <img src="/office.webp" alt="login form" class="img-fluid"
+                            style="border-radius: 1rem 0 0 1rem;" />
+                    </div>
+                    <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                        <div class="card-body p-4 p-lg-5 text-black">
 
-                <div class="form-floating mb-3">
-                    <input type="text" name="username" class="form-control" id="username" placeholder="Username"
-                        required>
-                    <label for="username">Username</label>
+                            <form action="/user/login" method="post">
+                                <?= csrf_field() ?>
+
+                                <div class="d-flex align-items-center mb-3 pb-1">
+                                    <img class="img-fluid me-3" src="/E-RUANG-LOGO.svg" alt="" width="50" height="50">
+                                    <span class="h1 fw-bold mb-0">E-RUANG</span>
+                                </div>
+
+                                <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Login ke dalam Akun Anda
+                                </h5>
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="username" id="username"
+                                        class="form-control form-control-lg" required />
+                                    <label class="form-label" for="username">Username</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" name="password" id="password"
+                                        class="form-control form-control-lg" required />
+                                    <label class="form-label" for="password">Kata Sandi</label>
+                                </div>
+
+                                <div class="pt-1 mb-4">
+                                    <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                                </div>
+
+                                <p class="pb-lg-2" style="color: #393f81;">Belum punya akun? <a href="/signup"
+                                        style="color: #393f81;">Daftar Sekarang</a></p>
+
+                            </form>
+
+                        </div>
+                    </div>
                 </div>
-                <div class="form-floating mb-3">
-                    <input type="password" name="password" class="form-control" id="password" placeholder="Kata Sandi"
-                        required>
-                    <label for="password">Kata Sandi</label>
-                </div>
-                <div class="btn-group" role="group" aria-label="Login-SignUp">
-                    <button type="submit" class="btn btn-lg btn-primary mb-3">Masuk</button>
-                    <a class="btn btn-lg btn-secondary mb-3" href="/signup" role="button">Daftar</a>
-                </div>
-            </form>
+            </div>
         </div>
-        <div class="col-1"></div>
     </div>
 </div>
