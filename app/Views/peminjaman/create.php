@@ -24,10 +24,10 @@
 <!-- Section: Design Block -->
 <section class="">
     <!-- Jumbotron -->
-    <div class="px-4 py-5 px-md-5 text-center text-lg-start bg-body-tertiary">
+    <div class="px-4 py-5 px-md-5 bg-body-tertiary">
         <div class="container">
             <div class="row gx-lg-5 align-items-center">
-                <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="col-lg-6 mb-5 mb-lg-0 text-center text-lg-start">
                     <h1 class="my-5 display-3 fw-bold ls-tight">
                         Formulir<br />
                         <span class="text-primary">Peminjaman Ruangan</span>

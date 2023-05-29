@@ -43,7 +43,7 @@
             </h2>
         </div>
         <div class="card-body">
-            <div class="container px-3 py-3 px-md-3 text-center text-lg-start">
+            <div class="container px-3 py-3 px-md-3">
                 <div class="d-grid">
                     <a class="btn btn-lg btn-info mb-3"
                         href="/peminjaman/create/<?= esc(session()->get('pegawai_id'), 'url') ?>" role="button">
@@ -119,99 +119,93 @@
                                                                 <div class="modal-body">
 
                                                                     <!-- Memulai input form -->
-                                                                    <div class="py-1 px-5 text-center">
-                                                                        <div class="mb-md-5 mt-md-5">
+                                                                    <div class="py-1 px-5">
 
-                                                                            <h2 class="fw-bold mb-2 text-uppercase">
+                                                                        <div class="text-center text-lg-start">
+                                                                            <h2 class="fw-bold text-uppercase">
                                                                                 Edit Peminjaman</h2>
-                                                                            <p class="text-black-50 mb-5">Dimohon untuk mengisi
-                                                                                semua bagian!</p>
-
-                                                                            <input type="text" class="form-control form-control-lg"
-                                                                                name="id" id="input00"
-                                                                                value="<?= esc($peminjaman_item['id']) ?>" readonly
-                                                                                hidden>
-
-                                                                            <div class="form-outline form-white mb-5">
-                                                                                <label class="form-label" for="inputGroupSelect01">
-                                                                                    Nama Pegawai</label>
-                                                                                <select name="id_pegawai"
-                                                                                    class="form-select form-select-lg"
-                                                                                    id="inputGroupSelect01">
-                                                                                    <option name="id_pegawai"
-                                                                                        value="<?= esc($peminjaman_item['id_pegawai']) ?>"
-                                                                                        selected>
-                                                                                        <?= esc($peminjaman_item['nama_pegawai']) ?>
-                                                                                    </option>
-                                                                                </select>
-                                                                            </div>
-
-                                                                            <div class="form-outline form-white mb-5">
-                                                                                <label class="form-label" for="inputGroupSelect02">
-                                                                                    Nama Ruangan</label>
-                                                                                <select name="id_ruangan"
-                                                                                    class="form-select form-select-lg"
-                                                                                    id="inputGroupSelect02" required>
-                                                                                    <option name="id_ruangan"
-                                                                                        value="<?= esc($peminjaman_item['id_ruangan']) ?>"
-                                                                                        selected>
-                                                                                        <?= esc($peminjaman_item['nama_ruangan']) ?>
-                                                                                    </option>
-                                                                                    <?php if (!empty($ruangan) && is_array($ruangan)): ?>
-                                                                                        <?php foreach ($ruangan as $ruangan_item): ?>
-                                                                                            <?php if ($ruangan_item['id'] != $peminjaman_item['id_ruangan']): ?>
-                                                                                                <option name="id_ruangan"
-                                                                                                    value="<?= esc($ruangan_item['id']) ?>"><?= esc($ruangan_item['nama']) ?></option>
-                                                                                            <?php endif ?>
-                                                                                        <?php endforeach ?>
-                                                                                    <?php else: ?>
-                                                                                        <h3>Tidak Ada Ruangan</h3>
-                                                                                        <p>Unable to find any ruangan for you.</p>
-                                                                                    <?php endif ?>
-                                                                                </select>
-                                                                            </div>
-
-                                                                            <div class="form-outline form-white mb-5">
-                                                                                <label class="form-label"
-                                                                                    for="tujuan_peminjaman">Tujuan
-                                                                                    Peminjaman</label>
-                                                                                <textarea class="form-control form-control-lg"
-                                                                                    name="acara" aria-label="Tujuan Peminjaman"
-                                                                                    id="tujuan_peminjaman"
-                                                                                    required><?= esc($peminjaman_item['acara']) ?></textarea>
-                                                                            </div>
-
-                                                                            <div class="form-outline form-white mb-5">
-                                                                                <label class="form-label" for="birthday">Tanggal
-                                                                                    Peminjaman:</label>
-                                                                                <input type="date"
-                                                                                    class="form-control form-control-lg"
-                                                                                    id="birthday" name="tanggal"
-                                                                                    value="<?= esc($peminjaman_item['tanggal']) ?>"
-                                                                                    min="<?= date('Y-m-d') ?>" required>
-                                                                            </div>
-
-                                                                            <div class="form-outline form-white mb-5">
-                                                                                <label class="form-label" for="waktu_mulai">Waktu
-                                                                                    Mulai:</label>
-                                                                                <input type="time"
-                                                                                    class="form-control form-control-lg"
-                                                                                    id="waktu_mulai" name="waktu_mulai"
-                                                                                    value="<?= esc($peminjaman_item['waktu_mulai']) ?>"
-                                                                                    required>
-                                                                            </div>
-
-                                                                            <div class="form-outline form-white mb-5">
-                                                                                <label class="form-label" for="waktu_selesai">Waktu
-                                                                                    Selesai:</label>
-                                                                                <input type="time"
-                                                                                    class="form-control form-control-lg"
-                                                                                    id="waktu_selesai" name="waktu_selesai"
-                                                                                    value="<?= esc($peminjaman_item['waktu_selesai']) ?>"
-                                                                                    required>
-                                                                            </div>
-
+                                                                            <p class="text-black-50 mb-3">Dimohon untuk mengisi
+                                                                                semua
+                                                                                bagian!</p>
                                                                         </div>
+
+                                                                        <input type="text" class="form-control" name="id"
+                                                                            id="input00" value="<?= esc($peminjaman_item['id']) ?>"
+                                                                            readonly hidden>
+
+                                                                        <div class="form-outline form-white mb-3">
+                                                                            <label class="form-label" for="inputGroupSelect01">
+                                                                                Nama Pegawai</label>
+                                                                            <select name="id_pegawai" class="form-select"
+                                                                                id="inputGroupSelect01">
+                                                                                <option name="id_pegawai"
+                                                                                    value="<?= esc($peminjaman_item['id_pegawai']) ?>"
+                                                                                    selected>
+                                                                                    <?= esc($peminjaman_item['nama_pegawai']) ?>
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <div class="form-outline form-white mb-3">
+                                                                            <label class="form-label" for="inputGroupSelect02">
+                                                                                Nama Ruangan</label>
+                                                                            <select name="id_ruangan" class="form-select"
+                                                                                id="inputGroupSelect02" required>
+                                                                                <option name="id_ruangan"
+                                                                                    value="<?= esc($peminjaman_item['id_ruangan']) ?>"
+                                                                                    selected>
+                                                                                    <?= esc($peminjaman_item['nama_ruangan']) ?>
+                                                                                </option>
+                                                                                <?php if (!empty($ruangan) && is_array($ruangan)): ?>
+                                                                                    <?php foreach ($ruangan as $ruangan_item): ?>
+                                                                                        <?php if ($ruangan_item['id'] != $peminjaman_item['id_ruangan']): ?>
+                                                                                            <option name="id_ruangan"
+                                                                                                value="<?= esc($ruangan_item['id']) ?>"><?= esc($ruangan_item['nama']) ?></option>
+                                                                                        <?php endif ?>
+                                                                                    <?php endforeach ?>
+                                                                                <?php else: ?>
+                                                                                    <h3>Tidak Ada Ruangan</h3>
+                                                                                    <p>Unable to find any ruangan for you.</p>
+                                                                                <?php endif ?>
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <div class="form-outline form-white mb-3">
+                                                                            <label class="form-label" for="tujuan_peminjaman">Tujuan
+                                                                                Peminjaman</label>
+                                                                            <textarea class="form-control" name="acara"
+                                                                                aria-label="Tujuan Peminjaman"
+                                                                                id="tujuan_peminjaman"
+                                                                                required><?= esc($peminjaman_item['acara']) ?></textarea>
+                                                                        </div>
+
+                                                                        <div class="form-outline form-white mb-3">
+                                                                            <label class="form-label" for="birthday">Tanggal
+                                                                                Peminjaman:</label>
+                                                                            <input type="date" class="form-control" id="birthday"
+                                                                                name="tanggal"
+                                                                                value="<?= esc($peminjaman_item['tanggal']) ?>"
+                                                                                min="<?= date('Y-m-d') ?>" required>
+                                                                        </div>
+
+                                                                        <div class="form-outline form-white mb-3">
+                                                                            <label class="form-label" for="waktu_mulai">Waktu
+                                                                                Mulai:</label>
+                                                                            <input type="time" class="form-control" id="waktu_mulai"
+                                                                                name="waktu_mulai"
+                                                                                value="<?= esc($peminjaman_item['waktu_mulai']) ?>"
+                                                                                required>
+                                                                        </div>
+
+                                                                        <div class="form-outline form-white mb-3">
+                                                                            <label class="form-label" for="waktu_selesai">Waktu
+                                                                                Selesai:</label>
+                                                                            <input type="time" class="form-control"
+                                                                                id="waktu_selesai" name="waktu_selesai"
+                                                                                value="<?= esc($peminjaman_item['waktu_selesai']) ?>"
+                                                                                required>
+                                                                        </div>
+
                                                                     </div>
                                                                     <!-- Mengakhiri input form -->
 
