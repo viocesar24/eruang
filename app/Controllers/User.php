@@ -60,12 +60,15 @@ class User extends BaseController
             $password = $this->request->getPost('password');
 
             $userModel = new UserModel();
+            $modelPegawai = model(PegawaiModel::class);
             $user = $userModel->where('username', $username)->first();
+            $pegawai = $modelPegawai->where('id', $user['pegawai_id'])->first();
 
             if ($user && password_verify($password, $user['password_hash'])) {
                 // Login successful
                 session()->set('user_id', $user['id']);
                 session()->set('pegawai_id', $user['pegawai_id']);
+                session()->set('pegawai_id_user', $pegawai['nama']);
                 session()->setFlashdata('loginBerhasil', 'Anda Berhasil Masuk. Selamat Melakukan Booking Ruangan!');
                 return redirect()->to('/peminjaman');
             } else {

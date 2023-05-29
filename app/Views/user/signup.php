@@ -61,7 +61,9 @@
                                 </div>
 
                                 <div class="pt-1 mb-4">
-                                    <button class="btn btn-dark btn-lg btn-block" type="submit">Daftar</button>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-dark btn-lg btn-block" type="submit">Daftar</button>
+                                    </div>
                                 </div>
 
                                 <p class="pb-lg-2" style="color: #393f81;">Sudah punya akun? <a href="/login"

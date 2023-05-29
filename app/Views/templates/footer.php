@@ -12,10 +12,30 @@
     $(document).ready(function () {
         // Initialize the DataTables plugin on the table with id "myTable"
         $('#myTable').DataTable({
-            order: [[4, 'desc'], [5, 'desc']],
+            order: [[3, 'desc'], [4, 'desc']],
             orderCellsTop: true
         });
     });
+</script>
+<script>
+    function addActiveClass() {
+        // Get the current URL.
+        const currentUrl = window.location.href;
+
+        // Get all of the <a> tags in the document.
+        const aTags = document.querySelectorAll('a');
+
+        // Iterate over the <a> tags.
+        for (const aTag of aTags) {
+            // If the href attribute of the <a> tag matches the current URL, add the 'active' class to it.
+            if (aTag.href === currentUrl) {
+                aTag.classList.add('active');
+            }
+        }
+    }
+
+    // Add the 'active' class to the <a> tag when the page loads.
+    window.addEventListener('load', addActiveClass);
 </script>
 </body>
 
