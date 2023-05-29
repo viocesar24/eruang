@@ -5,13 +5,6 @@
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-<?php elseif (session()->has('pinjamGagal')): ?>
-    <div class="alert alert-danger alert-dismissible" role="alert">
-        <div>
-            <?= session()->getFlashdata('pinjamGagal') ?>
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
 <?php elseif (session()->has('error')): ?>
     <div class="alert alert-danger alert-dismissible" role="alert">
         <div>
@@ -40,7 +33,8 @@
                         <span class="text-primary">Peminjaman Ruangan</span>
                     </h1>
                     <p style="color: hsl(217, 10%, 50.8%)">
-                        Cek daftar peminjaman pada Beranda. Pastikan waktu dan ruangan yang ingin Anda pinjam belum dipinjam oleh orang lain.
+                        Cek daftar peminjaman pada Beranda. Pastikan waktu dan ruangan yang ingin Anda pinjam belum
+                        dipinjam oleh orang lain.
                         Hubungi Admin jika mengalami kesulitan.
                     </p>
                 </div>
@@ -49,23 +43,24 @@
                     <div class="card">
                         <div class="card-body py-5 px-md-5">
 
-                            <form action="/peminjaman/create" method="post" class="needs-validation" novalidate>
+                            <form action="/peminjaman/create" method="post">
                                 <?= csrf_field() ?>
 
                                 <!-- Nama Pegawai sudah ditentukan berdasarkan siapa yang login -->
-                                <div class="form-outline mb-1">
+                                <div class="form-outline mb-3">
                                     <div class="form-outline">
+                                        <label class="form-label" for="inputGroupSelect01">Nama Pegawai</label>
                                         <select name="id_pegawai" class="form-select" id="inputGroupSelect01">
                                             <option name="id_pegawai" value="<?= esc($user['pegawai_id']) ?>" selected>
                                                 <?= esc($user['nama']) ?>
                                             </option>
                                         </select>
-                                        <label class="form-label" for="inputGroupSelect01">Nama Pegawai</label>
                                     </div>
                                 </div>
 
                                 <!-- Nama Ruangan yang dipinjam -->
-                                <div class="form-outline mb-1">
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="id_ruangan">Nama Ruangan</label>
                                     <select name="id_ruangan" class="form-select" id="inputGroupSelect02">
                                         <option value="<?= null ?>" selected>Pilih Ruangan...</option>
                                         <?php if (!empty($ruangan) && is_array($ruangan)): ?>
@@ -78,40 +73,37 @@
                                             <p>Unable to find any ruangan for you.</p>
                                         <?php endif ?>
                                     </select>
-                                    <label class="form-label" for="id_ruangan">Nama Ruangan</label>
                                 </div>
 
                                 <!-- Nama Acara atau Detail Acara Peminjam -->
-                                <div class="form-outline mb-1">
-                                    <textarea class="form-control" name="acara" id="detail_acara"
-                                        aria-label="Tujuan Pemakaian" placeholder="Tujuan Pemakaian"
-                                        required></textarea>
+                                <div class="form-outline mb-3">
                                     <label class="form-label" for="detail_acara">Tujuan Pemakaian</label>
+                                    <textarea class="form-control" name="acara" id="detail_acara"
+                                        aria-label="Tujuan Pemakaian" required></textarea>
                                 </div>
 
                                 <!-- Tanggal Peminjaman -->
-                                <div class="form-outline mb-1">
-                                    <input type="text" id="tanggal_peminjaman" name="tanggal" class="form-control"
-                                        placeholder="Tanggal Peminjaman" onfocus="(this.type='date')"
-                                        onblur="if(this.value==''){this.type='text'}" min="<?= date('Y-m-d') ?>"
-                                        required>
+                                <div class="form-outline mb-3">
                                     <label class="form-label" for="tanggal_peminjaman">Tanggal Peminjaman</label>
+                                    <input type="text" id="tanggal_peminjaman" name="tanggal" class="form-control"
+                                        onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}"
+                                        min="<?= date('Y-m-d') ?>" required>
                                 </div>
 
                                 <!-- Waktu Kapan Ruangan Akan Dipinjam -->
-                                <div class="form-outline mb-1">
-                                    <input type="text" id="waktu_mulai" name="waktu_mulai" class="form-control"
-                                        placeholder="Waktu Mulai Peminjaman" onfocus="(this.type='time')"
-                                        onblur="if(this.value==''){this.type='text'}" required>
+                                <div class="form-outline mb-3">
                                     <label class="form-label" for="waktu_mulai">Waktu Mulai Peminjaman</label>
+                                    <input type="text" id="waktu_mulai" name="waktu_mulai" class="form-control"
+                                        onfocus="(this.type='time')" onblur="if(this.value==''){this.type='text'}"
+                                        required>
                                 </div>
 
                                 <!-- Waktu Kapan Ruangan Selesai Dipinjam -->
-                                <div class="form-outline mb-1">
-                                    <input type="text" id="waktu_selesai" name="waktu_selesai" class="form-control"
-                                        placeholder="Waktu Selesai Peminjaman" onfocus="(this.type='time')"
-                                        onblur="if(this.value==''){this.type='text'}" required>
+                                <div class="form-outline mb-3">
                                     <label class="form-label" for="waktu_selesai">Waktu Selesai Peminjaman</label>
+                                    <input type="text" id="waktu_selesai" name="waktu_selesai" class="form-control"
+                                        onfocus="(this.type='time')" onblur="if(this.value==''){this.type='text'}"
+                                        required>
                                 </div>
 
                                 <!-- Submit button -->

@@ -25,7 +25,7 @@ class Peminjaman extends BaseController
         $modelRuangan = model(RuanganModel::class);
 
         $data = [
-            'peminjaman' => $model->getPeminjaman(),
+            'peminjaman' => $model->where('tanggal >=', date('Y-m-d'))->getPeminjaman(),
             'ruangan' => $modelRuangan->getRuangan(),
             'title' => 'Daftar Peminjaman Semua User',
         ];
@@ -43,16 +43,12 @@ class Peminjaman extends BaseController
         $modelRuangan = model(RuanganModel::class);
 
         $data = [
-            'peminjaman' => $modelPeminjaman->getPeminjamanByUser(),
+            'peminjaman' => $modelPeminjaman->where('tanggal >=', date('Y-m-d'))->getPeminjamanByUser(),
             'ruangan' => $modelRuangan->getRuangan(),
             'title' => 'Buat ruangan',
         ];
 
-        // if (empty($data['peminjaman'])) {
-        //     throw new PageNotFoundException('Cannot find the peminjaman item');
-        // }
-
-        $data['title'] = 'Daftar Peminjaman User: ';
+        $data['title'] = 'Daftar Peminjaman - ' . session()->get('pegawai_id_user');
 
         return view('templates/header', $data)
             . view('peminjaman/view')
@@ -69,10 +65,6 @@ class Peminjaman extends BaseController
             'ruangan' => $modelRuangan->getRuangan(),
             'title' => 'Buat ruangan',
         ];
-
-        // if (empty($data['peminjaman'])) {
-        //     throw new PageNotFoundException('Cannot find the peminjaman item: ' . $id);
-        // }
 
         $data['title'] = 'Detail Peminjaman:';
 
@@ -144,7 +136,7 @@ class Peminjaman extends BaseController
         // Membandingkan nilai waktu
         if ($waktu_mulai_int >= $waktu_selesai_int) {
             // Menampilkan pesan error jika waktu mulai lebih besar atau sama dengan waktu selesai
-            session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu Selesai Harus Lebih Besar dari Waktu Mulai.');
+            session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu Selesai Harus Lebih Besar dari Waktu Mulai.');
             return view('templates/header', $data)
                 . view('peminjaman/create')
                 . view('templates/footer');
@@ -162,7 +154,7 @@ class Peminjaman extends BaseController
                 // Membandingkan data waktu dengan tanggal dan waktu sekarang
                 if ($tanggal < $tanggal_sekarang || ($tanggal == $tanggal_sekarang && ($waktu_mulai < $waktu_sekarang || $waktu_selesai < $waktu_sekarang))) {
                     // Menampilkan pesan error jika data waktu kurang dari tanggal dan waktu sekarang
-                    session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
+                    session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
                     return view('templates/header', $data)
                         . view('peminjaman/create')
                         . view('templates/footer');
@@ -182,7 +174,7 @@ class Peminjaman extends BaseController
                 }
             } else {
                 // Menampilkan pesan error
-                session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu yang Anda Pilih Sudah Terisi.');
+                session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu yang Anda Pilih Sudah Terisi.');
                 return view('templates/header', $data)
                     . view('peminjaman/create')
                     . view('templates/footer');
@@ -259,7 +251,7 @@ class Peminjaman extends BaseController
         // Membandingkan nilai waktu
         if ($waktu_mulai_int >= $waktu_selesai_int) {
             // Menampilkan pesan error jika waktu mulai lebih besar atau sama dengan waktu selesai
-            session()->setFlashdata('editGagal', 'Anda Tidak Berhasil Mengedit, Waktu Selesai Harus Lebih Besar dari Waktu Mulai.');
+            session()->setFlashdata('error', 'Anda Tidak Berhasil Mengedit, Waktu Selesai Harus Lebih Besar dari Waktu Mulai.');
             return redirect()->back();
         } else {
             // Mengecek apakah ada data waktu yang tumpang tindih
@@ -275,7 +267,7 @@ class Peminjaman extends BaseController
                 // Membandingkan data waktu dengan tanggal dan waktu sekarang
                 if ($tanggal <= $tanggal_sekarang && $waktu_mulai_int <= $waktu_sekarang) {
                     // Menampilkan pesan error jika data waktu kurang dari tanggal dan waktu sekarang
-                    session()->setFlashdata('pinjamGagal', 'Anda Tidak Berhasil Meminjam Ruangan, Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
+                    session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
                     return redirect()->back();
                 } else {
                     // Menyimpan data ke database
@@ -294,7 +286,7 @@ class Peminjaman extends BaseController
                 }
             } else {
                 // Menampilkan pesan error
-                session()->setFlashdata('editGagal', 'Anda Tidak Berhasil Mengedit, Waktu yang Anda Pilih Sudah Terisi.');
+                session()->setFlashdata('error', 'Anda Tidak Berhasil Mengedit, Waktu yang Anda Pilih Sudah Terisi.');
                 return redirect()->back();
             }
         }

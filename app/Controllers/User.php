@@ -54,7 +54,6 @@ class User extends BaseController
 
         helper('form');
 
-        $data = [];
         if ($this->request->getMethod() == 'post') {
             $username = $this->request->getPost('username');
             $password = $this->request->getPost('password');
@@ -62,14 +61,14 @@ class User extends BaseController
             $userModel = new UserModel();
             $modelPegawai = model(PegawaiModel::class);
             $user = $userModel->where('username', $username)->first();
-            $pegawai = $modelPegawai->where('id', $user['pegawai_id'])->first();
 
             if ($user && password_verify($password, $user['password_hash'])) {
+                $pegawai = $modelPegawai->where('id', $user['pegawai_id'])->first();
                 // Login successful
                 session()->set('user_id', $user['id']);
                 session()->set('pegawai_id', $user['pegawai_id']);
                 session()->set('pegawai_id_user', $pegawai['nama']);
-                session()->setFlashdata('loginBerhasil', 'Anda Berhasil Masuk. Selamat Melakukan Booking Ruangan!');
+                session()->setFlashdata('loginBerhasil', 'Anda Berhasil Masuk. Selamat Melakukan Peminjaman Ruangan!');
                 return redirect()->to('/peminjaman');
             } else {
                 // Login failed
@@ -77,7 +76,7 @@ class User extends BaseController
             }
         }
 
-        return view('templates/header', $data)
+        return view('templates/header')
             . view('user/login')
             . view('templates/footer');
     }
@@ -104,6 +103,9 @@ class User extends BaseController
             if ($user) {
                 // Username sudah digunakan
                 session()->setFlashdata('error', 'Username Sudah Digunakan.');
+            } elseif ($pegawai_id == null) {
+                // ID Pegawai sudah digunakan
+                session()->setFlashdata('error', 'Harap Pilih Nama Pegawai.');
             } elseif ($userIDPegawai) {
                 // ID Pegawai sudah digunakan
                 session()->setFlashdata('error', 'Nama Pegawai Sudah Digunakan.');

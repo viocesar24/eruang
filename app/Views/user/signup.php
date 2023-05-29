@@ -1,12 +1,18 @@
 <?= validation_list_errors() ?>
 
 <?php if (session()->has('signupBerhasil')): ?>
-    <div class="alert alert-success" role="alert">
-        <?= session()->getFlashdata('signupBerhasil') ?>
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('signupBerhasil') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
 <?php elseif (session()->has('error')): ?>
-    <div class="alert alert-warning" role="alert">
-        <?= session()->getFlashdata('error') ?>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('error') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
 <?php endif; ?>
 
@@ -33,21 +39,22 @@
                                 <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Daftarkan Diri Anda</h5>
 
                                 <div class="form-outline mb-4">
+                                    <label class="form-label" for="username">Username</label>
                                     <input type="text" name="username" id="username"
                                         class="form-control form-control-lg" required />
-                                    <label class="form-label" for="username">Username</label>
                                 </div>
 
                                 <div class="form-outline mb-4">
+                                    <label class="form-label" for="password">Kata Sandi</label>
                                     <input type="password" name="password" id="password"
                                         class="form-control form-control-lg" required />
-                                    <label class="form-label" for="password">Kata Sandi</label>
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <select name="pegawai_id" id="pegawai_id" class="form-control form-control-lg"
+                                    <label class="form-label" for="pegawai_id">Pilih Nama Pegawai</label>
+                                    <select name="pegawai_id" id="pegawai_id" class="form-select form-select-lg"
                                         aria-label="Pilih Nama Pegawai..." required>
-                                        <option selected>Pilih Nama Pegawai...</option>
+                                        <option selected disabled>Pilih Nama Pegawai...</option>
                                         <?php if (!empty($pegawai) && is_array($pegawai)): ?>
                                             <?php foreach ($pegawai as $pegawai_item): ?>
                                                 <option name="pegawai_id" value="<?= esc($pegawai_item['id']) ?>"><?= esc($pegawai_item['nama']) ?>
@@ -57,7 +64,6 @@
                                             <option selected>Tidak Ada Daftar Pegawai</option>
                                         <?php endif ?>
                                     </select>
-                                    <label class="form-label" for="pegawai_id">Pilih Nama Pegawai</label>
                                 </div>
 
                                 <div class="pt-1 mb-4">
