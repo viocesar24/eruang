@@ -39,8 +39,6 @@ class User extends BaseController
             throw new PageNotFoundException('Cannot find the user item: ' . $id);
         }
 
-        $data['title'] = 'Detail User: ';
-
         return view('templates/header', $data)
             . view('user/profile')
             . view('templates/footer');
