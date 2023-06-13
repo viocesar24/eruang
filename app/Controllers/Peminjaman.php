@@ -151,6 +151,16 @@ class Peminjaman extends BaseController
                 $tanggal_sekarang = date("Y-m-d");
                 $waktu_sekarang = date("H:i:s");
 
+                // Mengecek jika pegawai_id valid
+                // Mengambil data pegawai dari database
+                $ruangan = $modelRuangan->where('id', $id_ruangan)->first();
+
+                // Jika data pegawai tidak ditemukan, maka input tidak valid
+                if ($ruangan == null) {
+                    session()->setFlashdata('error', 'ID Ruangan tidak valid.');
+                    return redirect()->to('peminjaman/create');
+                }
+
                 // Membandingkan data waktu dengan tanggal dan waktu sekarang
                 if ($tanggal < $tanggal_sekarang || ($tanggal == $tanggal_sekarang && ($waktu_mulai < $waktu_sekarang || $waktu_selesai < $waktu_sekarang))) {
                     // Menampilkan pesan error jika data waktu kurang dari tanggal dan waktu sekarang
@@ -185,8 +195,8 @@ class Peminjaman extends BaseController
     // fungsi edit yang digunakan untuk mengedit data peminjaman ruangan
     public function edit()
     {
-        // Fungsi ini memeriksa apakah pengguna sudah masuk atau belum. 
-        // Jika belum, pengguna akan diarahkan ke halaman login. 
+        // Fungsi ini memeriksa apakah pengguna sudah masuk atau belum.
+        // Jika belum, pengguna akan diarahkan ke halaman login.
         // Jika sudah masuk, fungsi ini akan memuat data pengguna, pegawai, dan ruangan dari model yang sesuai dan menampilkannya di halaman pembuatan peminjaman.
         if (!session()->get('user_id')) {
             return redirect()->to('/login');
