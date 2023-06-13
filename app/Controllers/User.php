@@ -87,28 +87,35 @@ class User extends BaseController
 
         helper('form');
 
-        $data = [];
         if ($this->request->getMethod() == 'post') {
 
-            $username = $this->request->getPost('username');
-            $password = $this->request->getPost('password');
-            $pegawai_id = $this->request->getPost('pegawai_id');
+            // Menambahkan fungsi validateData untuk memvalidasi input dari form
+            $rules = [
+                'username' => 'required|is_unique[users.username]',
+                'password' => 'required|min_length[3]',
+                'pegawai_id' => 'required|is_unique[users.pegawai_id]'
+            ];
 
-            $userModel = new UserModel();
-            // Cek apakah username dan nama pegawai sudah digunakan
-            $user = $userModel->where('username', $username)->first();
-            $userIDPegawai = $userModel->where('pegawai_id', $pegawai_id)->first();
-            if ($user) {
-                // Username sudah digunakan
-                session()->setFlashdata('error', 'Username Sudah Digunakan.');
-            } elseif ($pegawai_id == null) {
-                // ID Pegawai sudah digunakan
-                session()->setFlashdata('error', 'Harap Pilih Nama Pegawai.');
-            } elseif ($userIDPegawai) {
-                // ID Pegawai sudah digunakan
-                session()->setFlashdata('error', 'Nama Pegawai Sudah Digunakan.');
-            } else {
-                // Username belum digunakan
+            if ($this->validate($rules)) {
+                // Input valid
+                $username = $this->request->getPost('username');
+                $password = $this->request->getPost('password');
+                $pegawai_id = $this->request->getPost('pegawai_id');
+
+                $userModel = model(UserModel::class);
+
+                // Mengecek jika pegawai_id valid
+                // Mengambil data pegawai dari database
+                $modelPegawai = model(PegawaiModel::class);
+                $pegawai = $modelPegawai->where('id', $pegawai_id)->first();
+
+                // Jika data pegawai tidak ditemukan, maka input tidak valid
+                if ($pegawai == null) {
+                    session()->setFlashdata('error', 'Pegawai ID tidak valid.');
+                    return redirect()->to('/signup');
+                }
+
+                // Menyimpan data user ke database
                 if (
                     $userModel->insert([
                         'username' => $username,
@@ -121,8 +128,11 @@ class User extends BaseController
                     return redirect()->to('/login');
                 } else {
                     // Signup failed
-                    session()->setFlashdata('error', 'Item Peminjaman telah berhasil diubah.');
+                    session()->setFlashdata('error', 'Terjadi kesalahan saat menyimpan data user.');
                 }
+            } else {
+                // Input tidak valid
+                session()->setFlashdata('error', $this->validator->listErrors());
             }
         }
 

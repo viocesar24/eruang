@@ -1,5 +1,3 @@
-<?= validation_list_errors() ?>
-
 <?php if (session()->has('signupBerhasil')): ?>
     <div class="alert alert-success alert-dismissible" role="alert">
         <div>
