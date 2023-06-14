@@ -7,6 +7,13 @@
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
+<?php elseif (session()->has('success')): ?>
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <div>
+            <?= session()->getFlashdata('success') ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
 <?php elseif (session()->has('error')): ?>
     <div class="alert alert-warning alert-dismissible" role="alert">
         <div>

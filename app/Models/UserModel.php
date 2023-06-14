@@ -61,4 +61,12 @@ class UserModel extends Model
             ->where('users.pegawai_id', $id)
             ->first();
     }
+
+    public function gantiPassword($id, $new_password)
+    {
+        $data = [
+            'password_hash' => password_hash($new_password, PASSWORD_DEFAULT),
+        ];
+        return $this->update($id, $data);
+    }
 }

@@ -86,6 +86,10 @@ $routes->get('profile/(:segment)', [User::class, 'profile']);
 $routes->get('profile', [User::class, 'profile']);
 $routes->get('view/(:segment)', [User::class, 'view']);
 $routes->get('view', [User::class, 'index']);
+$routes->post('changePassword/(:segment)', [User::class, 'changePassword']);
+$routes->post('changePassword', [User::class, 'changePassword']);
+$routes->get('changePassword/(:segment)', [User::class, 'changePassword']);
+$routes->get('changePassword', [User::class, 'changePassword']);
 
 /*
  * --------------------------------------------------------------------

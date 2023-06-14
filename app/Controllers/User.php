@@ -157,6 +157,35 @@ class User extends BaseController
             . view('templates/footer');
     }
 
+    public function changePassword()
+    {
+        $model = model(UserModel::class);
+
+        $old_password = $this->request->getPost('old_password');
+        $new_password = $this->request->getPost('new_password');
+        $confirm_password = $this->request->getPost('confirm_password');
+
+        if ($new_password !== $confirm_password) {
+            // The passwords do not match
+            session()->setFlashData('error', 'Password tidak sama.');
+            return redirect()->back();
+        }
+
+        $user = $model->getUserWithPegawai(session()->get('user_id'));
+
+        if (!password_verify($old_password, $user['password_hash'])) {
+            // The old password is incorrect
+            session()->setFlashData('error', 'Password lama salah.');
+            return redirect()->back();
+        }
+
+        $model->gantiPassword(session()->get('user_id'), $new_password);
+
+        session()->remove('user_id');
+        session()->setFlashData('success', 'Password Anda berhasil diganti. Silahkan masuk lagi dengan password yang baru.');
+        return redirect()->to('/login');
+    }
+
     public function logout()
     {
         session()->destroy();
