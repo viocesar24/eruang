@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\Controllers"
+    "\\app\\Controllers",
+    "\\app\\Views",
+    "\\app\\Views\\peminjaman"
   ],
-  "SelectedNode": "\\app\\Controllers\\User.php",
+  "SelectedNode": "\\app\\Views\\peminjaman\\view.php",
   "PreviewInSolutionExplorer": false
 }

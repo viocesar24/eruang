@@ -302,6 +302,49 @@ class Peminjaman extends BaseController
         }
     }
 
+    public function end($id)
+    {
+        // cek session
+        if (!session()->get('user_id')) {
+            return redirect()->to('/login');
+        }
+
+        // load model
+        $modelPeminjaman = model(PeminjamanModel::class);
+        $modelRuangan = model(RuanganModel::class);
+
+        // cari data peminjaman
+        $peminjaman = $modelPeminjaman->find($id);
+        if (!$peminjaman) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        // cari data ruangan
+        $ruangan = $modelRuangan->find($peminjaman['id_ruangan']);
+        if (!$ruangan) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        // ambil waktu sekarang dalam format date("H:i:s")
+        $peminjaman['waktu_selesai'] = date("H:i:s");
+
+        // ubah waktu sekarang menjadi timestamp
+        $timestamp = strtotime($peminjaman['waktu_selesai']);
+
+        // kurangi 60 detik dari timestamp
+        $timestamp = $timestamp - 1;
+
+        // ubah timestamp kembali menjadi format date("H:i:s")
+        $peminjaman['waktu_selesai'] = date("H:i:s", $timestamp);
+
+        // simpan perubahan ke database
+        $modelPeminjaman->save($peminjaman);
+
+        // redirect ke halaman view dengan pesan sukses
+        session()->setFlashdata('endBerhasil', 'Anda Berhasil Mengakhiri Peminjaman!');
+        return redirect()->back();
+    }
+
     public function hapus()
     {
         helper('form');

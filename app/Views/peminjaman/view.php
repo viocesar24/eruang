@@ -96,6 +96,20 @@
                                                     data-bs-target="#modalHapus<?= esc($peminjaman_item['id']) ?>">
                                                     Hapus
                                                 </button>
+                                                <?php
+                                                // cek apakah variabel $p ada dan tidak kosong
+                                                if (isset($peminjaman_item) && !empty($peminjaman_item)) {
+                                                    // cek apakah tanggal dan waktu_mulai belum berlalu
+                                                    $tanggal_sekarang = date("Y-m-d");
+                                                    $waktu_sekarang = strtotime(date("H:i:s"));
+                                                    $tanggal_peminjaman = $peminjaman_item['tanggal'];
+                                                    $waktu_selesai_peminjaman = strtotime($peminjaman_item['waktu_selesai']);
+                                                    if ($tanggal_peminjaman >= $tanggal_sekarang && $waktu_selesai_peminjaman >= $waktu_sekarang) {
+                                                        // tampilkan tombol End dengan url ke fungsi end dan parameter id peminjaman
+                                                        echo "<a class='btn btn-outline-danger btn-sm' href='/peminjaman/end/" . $peminjaman_item['id'] . "' onclick='return confirm(\"Apakah Anda yakin ingin mengakhiri peminjaman ini?\")'>Akhiri Acara</a>";
+                                                    }
+                                                }
+                                                ?>
                                                 <!-- Form Modal -->
                                                 <form action="/peminjaman/edit" method="post">
                                                     <?= csrf_field() ?>
