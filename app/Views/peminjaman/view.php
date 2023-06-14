@@ -106,7 +106,7 @@
                                                     $waktu_selesai_peminjaman = strtotime($peminjaman_item['waktu_selesai']);
                                                     if ($tanggal_peminjaman >= $tanggal_sekarang && $waktu_selesai_peminjaman >= $waktu_sekarang) {
                                                         // tampilkan tombol End dengan url ke fungsi end dan parameter id peminjaman
-                                                        echo "<a class='btn btn-outline-danger btn-sm' href='/peminjaman/end/" . $peminjaman_item['id'] . "' onclick='return confirm(\"Apakah Anda yakin ingin mengakhiri peminjaman ini?\")'>Akhiri Acara</a>";
+                                                        echo "<a class='btn btn-success btn-sm' href='/peminjaman/end/" . $peminjaman_item['id'] . "' onclick='return confirm(\"Apakah Anda yakin ingin mengakhiri peminjaman ini?\")'>Akhiri</a>";
                                                     }
                                                 }
                                                 ?>
