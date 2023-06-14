@@ -141,12 +141,18 @@ class User extends BaseController
         }
 
         $modelPegawai = model(PegawaiModel::class);
+        $modelUser = model(UserModel::class);
 
-        $data = [
-            'pegawai' => $modelPegawai->getPegawai(),
-        ];
+        // Dapatkan semua pegawai_id dari tabel User
+        $user_ids = array_column($modelUser->getUser(), 'pegawai_id');
 
-        return view('templates/header', $data)
+        // Filter pegawai berdasarkan pegawai_id
+        $filtered_pegawai = array_filter($modelPegawai->getPegawai(), function ($item) use ($user_ids) {
+            // Hanya kembalikan elemen yang pegawai_id tidak ada di $user_ids
+            return !in_array($item['id'], $user_ids);
+        });
+
+        return view('templates/header', ['filtered_pegawai' => $filtered_pegawai])
             . view('user/signup')
             . view('templates/footer');
     }

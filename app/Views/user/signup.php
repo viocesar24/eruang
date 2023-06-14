@@ -53,10 +53,9 @@
                                     <select name="pegawai_id" id="pegawai_id" class="form-select form-select-lg"
                                         aria-label="Pilih Nama Pegawai..." required>
                                         <option selected disabled>Pilih Nama Pegawai...</option>
-                                        <?php if (!empty($pegawai) && is_array($pegawai)): ?>
-                                            <?php foreach ($pegawai as $pegawai_item): ?>
-                                                <option name="pegawai_id" value="<?= esc($pegawai_item['id']) ?>"><?= esc($pegawai_item['nama']) ?>
-                                                </option>
+                                        <?php if (!empty($filtered_pegawai) && is_array($filtered_pegawai)): ?>
+                                            <?php foreach ($filtered_pegawai as $item): ?>
+                                                <option name="pegawai_id" value="<?= esc($item['id']) ?>"><?= esc($item['nama']) ?></option>
                                             <?php endforeach ?>
                                         <?php else: ?>
                                             <option selected>Tidak Ada Daftar Pegawai</option>
