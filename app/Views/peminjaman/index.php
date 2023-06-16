@@ -194,9 +194,9 @@
                                                                         </div>
 
                                                                         <div class="form-outline form-white mb-3">
-                                                                            <label class="form-label" for="birthday">Tanggal
+                                                                            <label class="form-label" for="tanggal_peminjaman">Tanggal
                                                                                 Peminjaman:</label>
-                                                                            <input type="date" class="form-control" id="birthday"
+                                                                            <input type="date" class="form-control" id="tanggal_peminjaman"
                                                                                 name="tanggal"
                                                                                 value="<?= esc($peminjaman_item['tanggal']) ?>"
                                                                                 min="<?= date('Y-m-d') ?>" required>

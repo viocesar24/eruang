@@ -6,6 +6,6 @@
     "\\app\\Views",
     "\\app\\Views\\peminjaman"
   ],
-  "SelectedNode": "\\app\\Views\\peminjaman\\view.php",
+  "SelectedNode": "\\app\\Controllers\\Peminjaman.php",
   "PreviewInSolutionExplorer": false
 }

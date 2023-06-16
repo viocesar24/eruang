@@ -37,6 +37,27 @@
     // Add the 'active' class to the <a> tag when the page loads.
     window.addEventListener('load', addActiveClass);
 </script>
+<script>
+    // Fungsi untuk memeriksa apakah tanggal adalah akhir pekan
+    function isWeekend(date) {
+        var day = new Date(date).getDay();
+        return (day === 0 || day === 6);
+    }
+
+    // Mendapatkan elemen input
+    var input = document.getElementById("tanggal_peminjaman");
+
+    // Menambahkan event listener untuk input
+    input.addEventListener("input", function (e) {
+        // Jika tanggal yang dipilih adalah akhir pekan
+        if (isWeekend(this.value)) {
+            // Mengatur nilai input menjadi ''
+            this.value = '';
+            // Memberi tahu user untuk memilih tanggal lain
+            alert("Hari Sabtu dan Minggu tidak diizinkan");
+        }
+    });
+</script>
 </body>
 
 </html>
