@@ -47,16 +47,19 @@
     // Mendapatkan elemen input
     var input = document.getElementById("tanggal_peminjaman");
 
-    // Menambahkan event listener untuk input
-    input.addEventListener("input", function (e) {
-        // Jika tanggal yang dipilih adalah akhir pekan
-        if (isWeekend(this.value)) {
-            // Mengatur nilai input menjadi ''
-            this.value = '';
-            // Memberi tahu user untuk memilih tanggal lain
-            alert("Hari Sabtu dan Minggu tidak diizinkan");
-        }
-    });
+    // Jika input tidak null
+    if (input) {
+        // Menambahkan event listener untuk input
+        input.addEventListener("input", function (e) {
+            // Jika tanggal yang dipilih adalah akhir pekan
+            if (isWeekend(this.value)) {
+                // Mengatur nilai input menjadi ''
+                this.value = '';
+                // Memberi tahu user untuk memilih tanggal lain
+                alert("Hari Sabtu dan Minggu tidak diizinkan");
+            }
+        });
+    }
 </script>
 </body>
 
