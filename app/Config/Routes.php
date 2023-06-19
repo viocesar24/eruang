@@ -90,6 +90,18 @@ $routes->post('changePassword/(:segment)', [User::class, 'changePassword']);
 $routes->post('changePassword', [User::class, 'changePassword']);
 $routes->get('changePassword/(:segment)', [User::class, 'changePassword']);
 $routes->get('changePassword', [User::class, 'changePassword']);
+$routes->post('edit/(:segment)', [User::class, 'edit']);
+$routes->post('edit', [User::class, 'edit']);
+$routes->get('edit/(:segment)', [User::class, 'edit']);
+$routes->get('edit', [User::class, 'edit']);
+$routes->post('hapus/(:segment)', [User::class, 'hapus']);
+$routes->post('hapus', [User::class, 'hapus']);
+$routes->get('hapus/(:segment)', [User::class, 'hapus']);
+$routes->get('hapus', [User::class, 'hapus']);
+$routes->post('signupadmin/(:segment)', [User::class, 'signupadmin']);
+$routes->post('signupadmin', [User::class, 'signupadmin']);
+$routes->get('signupadmin/(:segment)', [User::class, 'signupadmin']);
+$routes->get('signupadmin', [User::class, 'signupadmin']);
 
 /*
  * --------------------------------------------------------------------

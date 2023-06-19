@@ -85,7 +85,7 @@
                                             <?= esc($peminjaman_item['waktu_selesai']) ?>
                                         </td>
                                         <td>
-                                            <?php if (session()->get('pegawai_id') === esc($peminjaman_item['id_pegawai'])) { ?>
+                                            <?php if (session()->get('pegawai_id') === esc($peminjaman_item['id_pegawai']) || (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35)) { ?>
                                                 <!-- Button trigger modal -->
                                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                                     data-bs-target="#modalEdit<?= esc($peminjaman_item['id']) ?>">
@@ -104,7 +104,7 @@
                                                     $waktu_sekarang = strtotime(date("H:i:s"));
                                                     $tanggal_peminjaman = $peminjaman_item['tanggal'];
                                                     $waktu_selesai_peminjaman = strtotime($peminjaman_item['waktu_selesai']);
-                                                    if ($tanggal_peminjaman >= $tanggal_sekarang && $waktu_selesai_peminjaman >= $waktu_sekarang) {
+                                                    if ($tanggal_peminjaman == $tanggal_sekarang && $waktu_selesai_peminjaman >= $waktu_sekarang) {
                                                         // tampilkan tombol End dengan url ke fungsi end dan parameter id peminjaman
                                                         echo "<a class='btn btn-success btn-sm' href='/peminjaman/end/" . $peminjaman_item['id'] . "' onclick='return confirm(\"Apakah Anda yakin ingin mengakhiri peminjaman ini?\")'>Akhiri</a>";
                                                     }
@@ -194,10 +194,11 @@
                                                                         </div>
 
                                                                         <div class="form-outline form-white mb-3">
-                                                                            <label class="form-label" for="tanggal_peminjaman">Tanggal
+                                                                            <label class="form-label"
+                                                                                for="tanggal_peminjaman">Tanggal
                                                                                 Peminjaman:</label>
-                                                                            <input type="date" class="form-control" id="tanggal_peminjaman"
-                                                                                name="tanggal"
+                                                                            <input type="date" class="form-control"
+                                                                                id="tanggal_peminjaman" name="tanggal"
                                                                                 value="<?= esc($peminjaman_item['tanggal']) ?>"
                                                                                 min="<?= date('Y-m-d') ?>" required>
                                                                         </div>

@@ -11,21 +11,37 @@ class User extends BaseController
 
     public function index()
     {
-        $userModel = new UserModel();
-        $user = $userModel->getUser();
+        if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            return redirect()->to('/login');
+        }
+
+        $modelPegawai = model(PegawaiModel::class);
+        $modelUser = model(UserModel::class);
+        $user = $modelUser->getUser();
 
         if (empty($user)) {
-            // User is not logged in, redirect to login page
-            return redirect()->to('/peminjaman');
+            // Tidak ada data user, kembali ke daftar
+            return redirect()->to('/daftar');
         }
+
+        // Dapatkan semua pegawai_id dari tabel User
+        $user_ids = array_column($modelUser->getUser(), 'pegawai_id');
+
+        // Filter pegawai berdasarkan pegawai_id
+        $filtered_pegawai = array_filter($modelPegawai->getPegawai(), function ($item) use ($user_ids) {
+            // Hanya kembalikan elemen yang pegawai_id tidak ada di $user_ids
+            return !in_array($item['id'], $user_ids);
+        });
 
         $data = [
             'user' => $user,
+            'pegawai' => $modelPegawai->getPegawai(),
             'title' => 'Daftar User:',
         ];
 
         return view('templates/header', $data)
-            . view('user/view')
+            . view('user/view', ['filtered_pegawai' => $filtered_pegawai])
             . view('templates/footer');
     }
 
@@ -157,6 +173,65 @@ class User extends BaseController
             . view('templates/footer');
     }
 
+    public function signupadmin()
+    {
+        if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            return redirect()->to('/login');
+        }
+
+        helper('form');
+
+        if ($this->request->getMethod() == 'post') {
+
+            // Menambahkan fungsi validateData untuk memvalidasi input dari form
+            $rules = [
+                'username' => 'required|is_unique[users.username]',
+                'password' => 'required|min_length[3]',
+                'pegawai_id' => 'required|is_unique[users.pegawai_id]'
+            ];
+
+            if ($this->validate($rules)) {
+                // Input valid
+                $username = $this->request->getPost('username');
+                $password = $this->request->getPost('password');
+                $pegawai_id = $this->request->getPost('pegawai_id');
+
+                $userModel = model(UserModel::class);
+
+                // Mengecek jika pegawai_id valid
+                // Mengambil data pegawai dari database
+                $modelPegawai = model(PegawaiModel::class);
+                $pegawai = $modelPegawai->where('id', $pegawai_id)->first();
+
+                // Jika data pegawai tidak ditemukan, maka input tidak valid
+                if ($pegawai == null) {
+                    session()->setFlashdata('error', 'Pegawai ID tidak valid.');
+                    return redirect()->to('/signup');
+                }
+
+                // Menyimpan data user ke database
+                if (
+                    $userModel->insert([
+                        'username' => $username,
+                        'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+                        'pegawai_id' => $pegawai_id,
+                    ])
+                ) {
+                    // Signup successful
+                    session()->setFlashdata('signupBerhasil', 'Pendaftaran Berhasil.');
+                    return redirect()->to('/user');
+                } else {
+                    // Signup failed
+                    session()->setFlashdata('error', 'Terjadi kesalahan saat menyimpan data user.');
+                }
+            } else {
+                // Input tidak valid
+                session()->setFlashdata('error', $this->validator->listErrors());
+            }
+        }
+    }
+
     public function changePassword()
     {
         $model = model(UserModel::class);
@@ -184,6 +259,99 @@ class User extends BaseController
         session()->remove('user_id');
         session()->setFlashData('success', 'Password Anda berhasil diganti. Silahkan masuk lagi dengan password yang baru.');
         return redirect()->to('/login');
+    }
+
+    public function edit()
+    {
+        if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            return redirect()->to('/login');
+        }
+
+        helper('form');
+
+        // Membuat aturan validasi
+        $rules = [
+            'id' => 'required|numeric',
+            'username' => 'required',
+            'password' => 'required',
+            'pegawai_id' => 'required|numeric'
+        ];
+
+        // Mengecek apakah input valid sesuai aturan
+        if ($this->validate($rules)) {
+
+            // Input valid
+            $id = $this->request->getPost('id');
+            $username = $this->request->getPost('username');
+            $password = $this->request->getPost('password');
+            $pegawai_id = $this->request->getPost('pegawai_id');
+
+            $userModel = model(UserModel::class);
+
+            // Mengecek jika pegawai_id valid
+            // Mengambil data pegawai dari database
+            $modelPegawai = model(PegawaiModel::class);
+            $pegawai = $modelPegawai->where('id', $pegawai_id)->first();
+
+            // Jika data pegawai tidak ditemukan, maka input tidak valid
+            if ($pegawai == null) {
+                session()->setFlashdata('error', 'Pegawai ID tidak valid.');
+                return redirect()->to('/user');
+            }
+
+            // Menyimpan data user ke database
+            if (
+                $userModel->replace([
+                    'id' => $id,
+                    'username' => $username,
+                    'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+                    'pegawai_id' => $pegawai_id,
+                ])
+            ) {
+                // Edit berhasil
+                session()->setFlashdata('editBerhasil', 'Edit Berhasil.');
+                return redirect()->to('/user');
+            } else {
+                // Edit gagal
+                session()->setFlashdata('error', 'Terjadi kesalahan saat menyimpan data user.');
+                return redirect()->to('/user');
+            }
+        }
+
+        return redirect()->to('/user');
+    }
+
+    public function hapus()
+    {
+        if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            return redirect()->to('/login');
+        }
+
+        helper('form');
+
+        $model = model(UserModel::class);
+
+        if (
+            $this->request->getMethod() === 'post' && $this->validate([
+                'id' => 'min_length[0]',
+            ])
+        ) {
+            $model->delete([
+                'id' => $this->request->getPost('id'),
+            ]);
+
+            if ($model->errors()) {
+                print_r($model->errors());
+            }
+
+            session()->setFlashdata('hapusBerhasil', 'User telah berhasil dihapus.');
+
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function logout()

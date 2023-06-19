@@ -17,6 +17,17 @@
         });
     });
 </script>
+<!-- tableUserAdmin -->
+<script>
+    // Wait for the HTML document to finish loading
+    $(document).ready(function () {
+        // Initialize the DataTables plugin on the table with id "myTable"
+        $('#tableUserAdmin').DataTable({
+            order: [0, 'asc'],
+            orderCellsTop: true
+        });
+    });
+</script>
 <script>
     function addActiveClass() {
         // Get the current URL.
