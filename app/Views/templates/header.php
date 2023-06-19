@@ -43,6 +43,12 @@
                                 <a class="nav-link"
                                     href="/profile/<?= esc(session()->get('pegawai_id'), 'url') ?>">Profil</a>
                             </li>
+                            <?php if (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35) { ?>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        href="/user">User</a>
+                                </li>
+                            <?php } ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="/logout">Keluar</a>
                             </li>

@@ -46,17 +46,35 @@
                             <form action="/peminjaman/create" method="post">
                                 <?= csrf_field() ?>
 
-                                <!-- Nama Pegawai sudah ditentukan berdasarkan siapa yang login -->
-                                <div class="form-outline mb-3">
-                                    <div class="form-outline">
-                                        <label class="form-label" for="inputGroupSelect01">Nama Pegawai</label>
-                                        <select name="id_pegawai" class="form-select" id="inputGroupSelect01">
-                                            <option name="id_pegawai" value="<?= esc($user['pegawai_id']) ?>" selected>
-                                                <?= esc($user['nama']) ?>
-                                            </option>
-                                        </select>
+                                <?php if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) { ?>
+                                    <!-- Nama Pegawai sudah ditentukan berdasarkan siapa yang login -->
+                                    <div class="form-outline mb-3">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="inputGroupSelect01">Nama Pegawai</label>
+                                            <select name="id_pegawai" class="form-select" id="inputGroupSelect01">
+                                                <option name="id_pegawai" value="<?= esc($user['pegawai_id']) ?>" selected>
+                                                    <?= esc($user['nama']) ?></option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } else { ?>
+                                    <!-- Menampilkan input semua nama pegawai jika Admin yang login -->
+                                    <div class="form-outline mb-3">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="inputGroupSelect01">Nama Pegawai</label>
+                                            <select name="id_pegawai" class="form-select" id="inputGroupSelect01">
+                                                <option selected disabled>Pilih Nama Pegawai...</option>
+                                                <?php if (!empty($pegawai) && is_array($pegawai)): ?>
+                                                    <?php foreach ($pegawai as $pegawai_item): ?>
+                                                        <option name="id_pegawai" value="<?= esc($pegawai_item['id']) ?>"><?= esc($pegawai_item['nama']) ?></option>
+                                                    <?php endforeach ?>
+                                                <?php else: ?>
+                                                    <option selected>Tidak Ada Daftar Pegawai</option>
+                                                <?php endif ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                <?php } ?>
 
                                 <!-- Nama Ruangan yang dipinjam -->
                                 <div class="form-outline mb-3">

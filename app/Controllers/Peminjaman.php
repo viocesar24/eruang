@@ -180,7 +180,11 @@ class Peminjaman extends BaseController
                     ]);
 
                     session()->setFlashdata('pinjamBerhasil', 'Anda Berhasil Meminjam Ruangan!');
-                    return redirect()->to('/view' . '/' . esc(session()->get('pegawai_id'), 'url'));
+                    if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+                        return redirect()->to('/view' . '/' . esc(session()->get('pegawai_id'), 'url'));
+                    } else {
+                        return redirect()->to('/peminjaman');
+                    }
                 }
             } else {
                 // Menampilkan pesan error
