@@ -1,6 +1,11 @@
 </div>
 <!-- Link ke file JavaScript jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- Link ke file Bootstrap Datepicker jQuery -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.id.min.js"></script>
 <!-- Link ke file JavaScript DataTables -->
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
@@ -44,31 +49,25 @@
             }
         }
     }
-
     // Add the 'active' class to the <a> tag when the page loads.
     window.addEventListener('load', addActiveClass);
 </script>
 <script>
-    // Fungsi untuk memeriksa apakah tanggal adalah akhir pekan
-    function isWeekend(date) {
-        var day = new Date(date).getDay();
-        return (day === 0 || day === 6);
-    }
-
+    $('#tanggal_peminjaman').datepicker({
+        format: 'yyyy-mm-dd',
+        daysOfWeekDisabled: [0, 6],
+        startDate: '0d'
+    });
+</script>
+<script>
     // Mendapatkan elemen input
     var input = document.getElementById("tanggal_peminjaman");
 
     // Jika input tidak null
     if (input) {
-        // Menambahkan event listener untuk input
-        input.addEventListener("input", function (e) {
-            // Jika tanggal yang dipilih adalah akhir pekan
-            if (isWeekend(this.value)) {
-                // Mengatur nilai input menjadi ''
-                this.value = '';
-                // Memberi tahu user untuk memilih tanggal lain
-                alert("Hari Sabtu dan Minggu tidak diizinkan");
-            }
+        input.addEventListener("keydown", function (e) {
+            // Mencegah user dari memasukkan nilai dengan keyboard
+            e.preventDefault();
         });
     }
 </script>

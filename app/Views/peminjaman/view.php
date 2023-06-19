@@ -195,17 +195,16 @@
 
                                                                         <div class="form-outline form-white mb-3">
                                                                             <label class="form-label"
-                                                                                for="tanggal_peminjaman">Tanggal
-                                                                                Peminjaman:</label>
-                                                                            <input type="date" class="form-control"
+                                                                                for="tanggal_peminjaman">Tanggal Peminjaman:</label>
+                                                                            <input type="text" class="form-control"
                                                                                 id="tanggal_peminjaman" name="tanggal"
                                                                                 value="<?= esc($peminjaman_item['tanggal']) ?>"
                                                                                 min="<?= date('Y-m-d') ?>" required>
                                                                         </div>
 
                                                                         <div class="form-outline form-white mb-3">
-                                                                            <label class="form-label" for="waktu_mulai">Waktu
-                                                                                Mulai:</label>
+                                                                            <label class="form-label" for="waktu_mulai">
+                                                                                Waktu Mulai:</label>
                                                                             <input type="time" class="form-control" id="waktu_mulai"
                                                                                 name="waktu_mulai"
                                                                                 value="<?= esc($peminjaman_item['waktu_mulai']) ?>"
@@ -213,8 +212,8 @@
                                                                         </div>
 
                                                                         <div class="form-outline form-white mb-3">
-                                                                            <label class="form-label" for="waktu_selesai">Waktu
-                                                                                Selesai:</label>
+                                                                            <label class="form-label" for="waktu_selesai">
+                                                                                Waktu Selesai:</label>
                                                                             <input type="time" class="form-control"
                                                                                 id="waktu_selesai" name="waktu_selesai"
                                                                                 value="<?= esc($peminjaman_item['waktu_selesai']) ?>"

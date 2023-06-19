@@ -102,10 +102,9 @@
 
                                 <!-- Tanggal Peminjaman -->
                                 <div class="form-outline mb-3">
-                                    <label class="form-label" for="tanggal_peminjaman">Tanggal Peminjaman</label>
-                                    <input type="text" id="tanggal_peminjaman" name="tanggal" class="form-control"
-                                        onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}"
-                                        min="<?= date('Y-m-d') ?>" required>
+                                    <label class="form-label" for="tanggal_peminjaman">Tanggal Peminjaman:</label>
+                                    <input type="text" class="form-control" id="tanggal_peminjaman" name="tanggal"
+                                        required>
                                 </div>
 
                                 <!-- Waktu Kapan Ruangan Akan Dipinjam -->
