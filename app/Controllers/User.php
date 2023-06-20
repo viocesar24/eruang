@@ -47,6 +47,11 @@ class User extends BaseController
 
     public function profile($id = null)
     {
+        if (!session()->has('user_id')) {
+            session()->setFlashdata('error', 'Sebelum lihat profil User, silahkan masuk terlebih dahulu.');
+            return redirect()->to('/login');
+        }
+
         $model = model(UserModel::class);
         $id = session()->get('user_id');
         $data['user'] = $model->getUserWithPegawai($id);
