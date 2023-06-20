@@ -103,8 +103,8 @@
                                 <!-- Tanggal Peminjaman -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="tanggal_peminjaman">Tanggal Peminjaman:</label>
-                                    <input type="text" class="form-control" id="tanggal_peminjaman" name="tanggal"
-                                        required>
+                                    <input type="text" class="form-control tanggal_peminjaman" id="tanggal_peminjaman"
+                                        name="tanggal" required>
                                 </div>
 
                                 <!-- Waktu Kapan Ruangan Akan Dipinjam -->

@@ -53,23 +53,18 @@
     window.addEventListener('load', addActiveClass);
 </script>
 <script>
-    $('#tanggal_peminjaman').datepicker({
+    $('.tanggal_peminjaman').datepicker({
         format: 'yyyy-mm-dd',
         daysOfWeekDisabled: [0, 6],
         startDate: '0d'
     });
 </script>
 <script>
-    // Mendapatkan elemen input
-    var input = document.getElementById("tanggal_peminjaman");
-
-    // Jika input tidak null
-    if (input) {
-        input.addEventListener("keydown", function (e) {
-            // Mencegah user dari memasukkan nilai dengan keyboard
+    document.querySelectorAll('input[id="tanggal_peminjaman"]').forEach(input => {
+        input.addEventListener('keydown', e => {
             e.preventDefault();
         });
-    }
+    });
 </script>
 </body>
 

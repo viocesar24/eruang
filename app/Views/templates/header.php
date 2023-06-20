@@ -39,8 +39,7 @@
                         </li>
                         <?php if (session()->get('user_id') !== null): ?>
                             <li class="nav-item">
-                                <a class="nav-link"
-                                    href="/view/<?= esc(session()->get('pegawai_id'), 'url') ?>">Peminjaman</a>
+                                <a class="nav-link" href="view">Peminjaman</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link"

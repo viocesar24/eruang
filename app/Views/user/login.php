@@ -15,7 +15,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
 <?php elseif (session()->has('error')): ?>
-    <div class="alert alert-warning alert-dismissible" role="alert">
+    <div class="alert alert-danger alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('error') ?>
         </div>
@@ -35,7 +35,7 @@
                     <div class="col-md-6 col-lg-7 d-flex align-items-center">
                         <div class="card-body p-4 p-lg-5 text-black">
 
-                            <form action="/user/login" method="post">
+                            <form action="login" method="post">
                                 <?= csrf_field() ?>
 
                                 <div class="d-flex align-items-center mb-3 pb-1">

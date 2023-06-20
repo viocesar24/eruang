@@ -13,7 +13,8 @@ class User extends BaseController
     {
         if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
             // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
-            return redirect()->to('/login');
+            session()->setFlashdata('error', 'Anda tidak diperkenankan melihat data user.');
+            return redirect()->to('/peminjaman');
         }
 
         $modelPegawai = model(PegawaiModel::class);
