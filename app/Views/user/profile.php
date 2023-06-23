@@ -33,7 +33,7 @@
                             <?= esc($user['username']) ?>
                         </h3>
                         <h3>Ganti Password</h3>
-                        <form action="<?= base_url('changePassword') ?>" method="post">
+                        <form action="/changePassword" method="post">
                             <?= csrf_field() ?>
                             <input type="password" name="old_password" placeholder="Old Password" required>
                             <input type="password" name="new_password" placeholder="New Password" required>
