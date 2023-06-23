@@ -37,6 +37,12 @@ class Peminjaman extends BaseController
 
     public function viewPeminjamanUser()
     {
+        if (!session()->has('pegawai_id')) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            session()->setFlashdata('error', 'Anda belum login, silahkan login terlebih dahulu.');
+            return redirect()->to('/login');
+        }
+
         helper('form');
 
         $modelPeminjaman = model(PeminjamanModel::class);
