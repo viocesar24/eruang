@@ -48,7 +48,7 @@ class UserModel extends Model
         return $this->where(['id' => $id])->first();
     }
 
-    public function getUserWithPegawai($id)
+    public function getUserWithPegawai()
     {
         $id = session()->get('pegawai_id');
 

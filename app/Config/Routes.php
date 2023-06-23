@@ -67,7 +67,6 @@ $routes->match(['get', 'post'], 'peminjaman/hapus/(:segment)', [Peminjaman::clas
 $routes->match(['get', 'post'], 'login/(:segment)', [User::class, 'login']);
 $routes->match(['get', 'post'], 'signup/(:segment)', [User::class, 'signup']);
 $routes->match(['get', 'post'], 'logout/(:segment)', [User::class, 'logout']);
-$routes->match(['get', 'post'], 'profile/(:segment)', [User::class, 'profile']);
 $routes->match(['get', 'post'], 'changePassword/(:segment)', [User::class, 'changePassword']);
 $routes->match(['get', 'post'], 'edit/(:segment)', [User::class, 'edit']);
 $routes->match(['get', 'post'], 'hapus/(:segment)', [User::class, 'hapus']);

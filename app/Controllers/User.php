@@ -46,7 +46,7 @@ class User extends BaseController
             . view('templates/footer');
     }
 
-    public function profile($id = null)
+    public function profile()
     {
         if (!session()->has('user_id')) {
             session()->setFlashdata('error', 'Sebelum lihat profil User, silahkan masuk terlebih dahulu.');
@@ -54,11 +54,10 @@ class User extends BaseController
         }
 
         $model = model(UserModel::class);
-        $id = session()->get('user_id');
-        $data['user'] = $model->getUserWithPegawai($id);
+        $data['user'] = $model->getUserWithPegawai();
 
         if (empty($data['user'])) {
-            throw new PageNotFoundException('Cannot find the user item: ' . $id);
+            throw new PageNotFoundException('User tidak ditemukan');
         }
 
         return view('templates/header', $data)
@@ -252,7 +251,7 @@ class User extends BaseController
             return redirect()->back();
         }
 
-        $user = $model->getUserWithPegawai(session()->get('user_id'));
+        $user = $model->getUserWithPegawai();
 
         if (!password_verify($old_password, $user['password_hash'])) {
             // The old password is incorrect
