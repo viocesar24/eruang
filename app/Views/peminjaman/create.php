@@ -110,16 +110,14 @@
                                 <!-- Waktu Kapan Ruangan Akan Dipinjam -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="waktu_mulai">Waktu Mulai Peminjaman</label>
-                                    <input type="text" id="waktu_mulai" name="waktu_mulai" class="form-control"
-                                        onfocus="(this.type='time')" onblur="if(this.value==''){this.type='text'}"
+                                    <input type="time" class="form-control" id="waktu_mulai" name="waktu_mulai"
                                         required>
                                 </div>
 
                                 <!-- Waktu Kapan Ruangan Selesai Dipinjam -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="waktu_selesai">Waktu Selesai Peminjaman</label>
-                                    <input type="text" id="waktu_selesai" name="waktu_selesai" class="form-control"
-                                        onfocus="(this.type='time')" onblur="if(this.value==''){this.type='text'}"
+                                    <input type="time" class="form-control" id="waktu_selesai" name="waktu_selesai"
                                         required>
                                 </div>
 
