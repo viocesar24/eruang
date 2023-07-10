@@ -45,9 +45,16 @@
         <div class="card-body">
             <div class="container px-3 py-3 px-md-3">
                 <div class="d-grid">
-                    <a class="btn btn-lg btn-info mb-3"
+                    <a class="btn btn-lg btn-info mb-2"
                         href="/peminjaman/create/<?= esc(session()->get('pegawai_id'), 'url') ?>" role="button">
                         Pinjam Ruangan</a>
+                    <?php if (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35) { ?>
+                        <form action="/peminjaman/export" class="d-grid" method="get">
+                            <?= csrf_field() ?>
+                            <button type="submit" class="btn btn-primary btn-lg mb-2">
+                                Ekspor Semua Data Peminjaman Ke Dalam Spreadsheet</button>
+                        </form>
+                    <?php } ?>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover table-responsive" id="myTable">
@@ -247,8 +254,7 @@
                                                                 <div class="modal-header">
                                                                     <h1 class="modal-title fs-5"
                                                                         id="exampleModalLabelHapus<?= esc($peminjaman_item['id']) ?>">
-                                                                        Hapus
-                                                                        Peminjaman </h1>
+                                                                        Hapus Peminjaman </h1>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                         aria-label="Tutup"></button>
                                                                 </div>

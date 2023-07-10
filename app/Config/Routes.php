@@ -42,6 +42,7 @@ $routes->match(['get', 'post'], 'peminjaman/edit', [Peminjaman::class, 'edit']);
 $routes->match(['get', 'post'], 'peminjaman/end', [Peminjaman::class, 'end']);
 $routes->match(['get', 'post'], 'peminjaman/hapus', [Peminjaman::class, 'hapus']);
 $routes->match(['get', 'post'], 'view', [Peminjaman::class, 'viewPeminjamanUser']);
+$routes->match(['get', 'post'], 'peminjaman/export', [Peminjaman::class, 'export']);
 
 $routes->match(['get', 'post'], 'login', [User::class, 'login']);
 $routes->match(['get', 'post'], 'signup', [User::class, 'signup']);

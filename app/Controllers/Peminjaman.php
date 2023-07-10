@@ -8,6 +8,9 @@ use App\Models\PegawaiModel;
 use App\Models\RuanganModel;
 use App\Models\UserModel;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Peminjaman extends BaseController
 {
     protected $session;
@@ -38,7 +41,7 @@ class Peminjaman extends BaseController
     public function viewPeminjamanUser()
     {
         if (!session()->has('pegawai_id')) {
-            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            // Session tidak ada, arahkan ke halaman login
             session()->setFlashdata('error', 'Anda belum login, silahkan login terlebih dahulu.');
             return redirect()->to('/login');
         }
@@ -380,5 +383,59 @@ class Peminjaman extends BaseController
         } else {
             return redirect()->back();
         }
+    }
+
+    public function export()
+    {
+        if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            session()->setFlashdata('error', 'Anda tidak diperkenankan mengunduh data peminjaman.');
+            return redirect()->to('/peminjaman');
+        }
+
+        // Panggil model Peminjaman
+        $model = new PeminjamanModel();
+
+        // Ambil semua data peminjaman dari database
+        $data = $model->findAll();
+
+        // Buat objek Spreadsheet
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Tulis header kolom
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'ID Pegawai');
+        $sheet->setCellValue('C1', 'ID Ruangan');
+        $sheet->setCellValue('D1', 'Acara');
+        $sheet->setCellValue('E1', 'Tanggal');
+        $sheet->setCellValue('F1', 'Waktu Mulai');
+        $sheet->setCellValue('G1', 'Waktu Selesai');
+
+        // Tulis data peminjaman
+        $row = 2;
+        foreach ($data as $peminjaman) {
+            $sheet->setCellValue('A' . $row, $peminjaman['id']);
+            $sheet->setCellValue('B' . $row, $peminjaman['id_pegawai']);
+            $sheet->setCellValue('C' . $row, $peminjaman['id_ruangan']);
+            $sheet->setCellValue('D' . $row, $peminjaman['acara']);
+            $sheet->setCellValue('E' . $row, $peminjaman['tanggal']);
+            $sheet->setCellValue('F' . $row, $peminjaman['waktu_mulai']);
+            $sheet->setCellValue('G' . $row, $peminjaman['waktu_selesai']);
+
+            $row++;
+        }
+
+        // Buat objek Writer untuk menulis ke file Excel
+        $writer = new Xlsx($spreadsheet);
+
+        // Atur header response
+        $response = service('response');
+        $response->setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->setHeader('Content-Disposition', 'attachment;filename="peminjaman.xlsx"');
+        $response->setHeader('Cache-Control', 'max-age=0');
+
+        // Tulis file Excel ke output response
+        $writer->save('php://output');
     }
 }
