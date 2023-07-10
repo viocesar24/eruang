@@ -48,12 +48,6 @@
                     <a class="btn btn-lg btn-info mb-2"
                         href="/peminjaman/create/<?= esc(session()->get('pegawai_id'), 'url') ?>" role="button">
                         Pinjam Ruangan</a>
-                    <?php if (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35) { ?>
-                        <form action="/peminjaman/export" class="d-grid" method="get">
-                            <button type="submit" class="btn btn-primary btn-lg mb-2">
-                                Ekspor Semua Data Peminjaman Ke Dalam Spreadsheet</button>
-                        </form>
-                    <?php } ?>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover table-responsive" id="myTable">
