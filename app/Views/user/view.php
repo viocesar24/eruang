@@ -38,17 +38,16 @@
         <div class="card-body">
             <div class="container px-3 py-3 px-md-3">
                 <div class="d-grid">
-                    <button type="button" class="btn btn-lg btn-info mb-3" data-bs-toggle="modal"
-                        data-bs-target="#modalBuat">Buat User</button>
+                    <button type="button" class="btn btn-lg btn-info mb-3" data-bs-toggle="modal" data-bs-target="#modalBuat">Buat User</button>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover table-responsive" id="tableUserAdmin">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">username</th>
-                                <th scope="col">id_pegawai</th>
-                                <th scope="col">aksi</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,37 +61,30 @@
                                             <?= esc($user_item['username']) ?>
                                         </td>
                                         <td>
-                                            <?= esc($user_item['pegawai_id']) ?>
+                                            <?= esc($user_item['nama_pegawai']) ?>
                                         </td>
                                         <td>
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                                data-bs-target="#modalEdit<?= esc($user_item['id']) ?>">
+                                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit<?= esc($user_item['id']) ?>">
                                                 Edit
                                             </button>
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#modalHapus<?= esc($user_item['id']) ?>">
+                                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= esc($user_item['id']) ?>">
                                                 Hapus
                                             </button>
                                             <!-- Form Modal -->
                                             <form action="/edit" method="post">
                                                 <?= csrf_field() ?>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="modalEdit<?= esc($user_item['id']) ?>" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabelEdit<?= esc($user_item['id']) ?>"
-                                                    aria-hidden="true">
-                                                    <div
-                                                        class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                                                <div class="modal fade" id="modalEdit<?= esc($user_item['id']) ?>" tabindex="-1" aria-labelledby="exampleModalLabelEdit<?= esc($user_item['id']) ?>" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h1 class="modal-title fs-5"
-                                                                    id="exampleModalLabelEdit<?= esc($user_item['id']) ?>">
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabelEdit<?= esc($user_item['id']) ?>">
                                                                     Edit User oleh Admin
                                                                     <?= session()->get('pegawai_id_user') ?>
                                                                 </h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                    aria-label="Tutup"></button>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                                             </div>
                                                             <div class="modal-body">
 
@@ -106,37 +98,30 @@
                                                                             semua bagian!</p>
                                                                     </div>
 
-                                                                    <input type="text" class="form-control" name="id"
-                                                                        id="input00" value="<?= esc($user_item['id']) ?>"
-                                                                        readonly hidden>
+                                                                    <input type="text" class="form-control" name="id" id="input00" value="<?= esc($user_item['id']) ?>" readonly hidden>
 
                                                                     <div class="form-outline form-white mb-3">
-                                                                        <label class="form-label"
-                                                                            for="inputGroup01">Username</label>
-                                                                        <input type="text" name="username" class="form-control"
-                                                                            id="inputGroup01"
-                                                                            value="<?= esc($user_item['username']) ?>" readonly>
+                                                                        <label class="form-label" for="inputGroup01">Username</label>
+                                                                        <input type="text" name="username" class="form-control" id="inputGroup01" value="<?= esc($user_item['username']) ?>" required>
                                                                     </div>
 
                                                                     <div class="form-outline form-white mb-3">
                                                                         <label class="form-label" for="password">
                                                                             Kata Sandi</label>
-                                                                        <input type="password" name="password" id="password"
-                                                                            class="form-control form-control-lg" required />
+                                                                        <input type="password" name="password" id="password" class="form-control form-control-lg" required />
                                                                     </div>
 
                                                                     <div class="form-outline form-white mb-3">
                                                                         <label class="form-label" for="pegawai_id">Pilih Nama
                                                                             Pegawai</label>
-                                                                        <select name="pegawai_id" id="pegawai_id"
-                                                                            class="form-select form-select-lg"
-                                                                            aria-label="Pilih Nama Pegawai..." required>
+                                                                        <select name="pegawai_id" id="pegawai_id" class="form-select form-select-lg" aria-label="Pilih Nama Pegawai..." required>
                                                                             <option selected disabled>Pilih Nama Pegawai...
                                                                             </option>
                                                                             <?php if (!empty($pegawai) && is_array($pegawai)): ?>
                                                                                 <?php foreach ($pegawai as $pegawai_item): ?>
-                                                                                    <option name="pegawai_id"
-                                                                                        value="<?= esc($pegawai_item['id']) ?>"><?= esc($pegawai_item['nama']) ?></option>
+                                                                                    <option name="pegawai_id" value="<?= esc($pegawai_item['id']) ?>">
+                                                                                        <?= esc($pegawai_item['nama']) ?>
+                                                                                    </option>
                                                                                 <?php endforeach ?>
                                                                             <?php else: ?>
                                                                                 <option selected>Tidak Ada Daftar Pegawai</option>
@@ -149,10 +134,8 @@
 
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Tutup</button>
-                                                                <button type="submit" name="submit"
-                                                                    class="btn btn-primary">Simpan</button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -161,28 +144,20 @@
                                             <form action="/hapus" method="post">
                                                 <?= csrf_field() ?>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="modalHapus<?= esc($user_item['id']) ?>"
-                                                    tabindex="-1"
-                                                    aria-labelledby="exampleModalLabelHapus<?= esc($user_item['id']) ?>"
-                                                    aria-hidden="true">
+                                                <div class="modal fade" id="modalHapus<?= esc($user_item['id']) ?>" tabindex="-1" aria-labelledby="exampleModalLabelHapus<?= esc($user_item['id']) ?>" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h1 class="modal-title fs-5"
-                                                                    id="exampleModalLabelHapus<?= esc($user_item['id']) ?>">
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabelHapus<?= esc($user_item['id']) ?>">
                                                                     Hapus User</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                    aria-label="Tutup"></button>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                                             </div>
                                                             <div class="modal-body text-center">
                                                                 <h2>Apakah Anda Yakin?</h2>
-                                                                <input type="hidden" class="form-control text-center"
-                                                                    placeholder="ID" aria-label="ID" aria-describedby="hapusID"
-                                                                    name="id" value="<?= esc($user_item['id']) ?>" readonly>
+                                                                <input type="hidden" class="form-control text-center" placeholder="ID" aria-label="ID" aria-describedby="hapusID" name="id" value="<?= esc($user_item['id']) ?>" readonly>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                                                 <button type="submit" class="btn btn-primary">Hapus</button>
                                                             </div>
                                                         </div>
@@ -192,40 +167,35 @@
                                             <form action="/signupadmin" method="post">
                                                 <?= csrf_field() ?>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="modalBuat" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabelBuat" aria-hidden="true">
+                                                <div class="modal fade" id="modalBuat" tabindex="-1" aria-labelledby="exampleModalLabelBuat" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h1 class="modal-title fs-5" id="exampleModalLabelBuat">Buat
                                                                     User</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                    aria-label="Tutup"></button>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="form-outline mb-4">
                                                                     <label class="form-label" for="username">Username</label>
-                                                                    <input type="text" name="username" id="username"
-                                                                        class="form-control form-control-lg" required />
+                                                                    <input type="text" name="username" id="username" class="form-control form-control-lg" required />
                                                                 </div>
 
                                                                 <div class="form-outline mb-4">
                                                                     <label class="form-label" for="password">Kata Sandi</label>
-                                                                    <input type="password" name="password" id="password"
-                                                                        class="form-control form-control-lg" required />
+                                                                    <input type="password" name="password" id="password" class="form-control form-control-lg" required />
                                                                 </div>
 
                                                                 <div class="form-outline mb-4">
                                                                     <label class="form-label" for="pegawai_id">Pilih Nama
                                                                         Pegawai</label>
-                                                                    <select name="pegawai_id" id="pegawai_id"
-                                                                        class="form-select form-select-lg"
-                                                                        aria-label="Pilih Nama Pegawai..." required>
+                                                                    <select name="pegawai_id" id="pegawai_id" class="form-select form-select-lg" aria-label="Pilih Nama Pegawai..." required>
                                                                         <option selected disabled>Pilih Nama Pegawai...</option>
                                                                         <?php if (!empty($filtered_pegawai) && is_array($filtered_pegawai)): ?>
                                                                             <?php foreach ($filtered_pegawai as $item): ?>
-                                                                                <option name="pegawai_id"
-                                                                                    value="<?= esc($item['id']) ?>"><?= esc($item['nama']) ?></option>
+                                                                                <option name="pegawai_id" value="<?= esc($item['id']) ?>">
+                                                                                    <?= esc($item['nama']) ?>
+                                                                                </option>
                                                                             <?php endforeach ?>
                                                                         <?php else: ?>
                                                                             <option selected>Tidak Ada Daftar Pegawai</option>
@@ -234,8 +204,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                                                 <button type="submit" class="btn btn-primary">Daftar</button>
                                                             </div>
                                                         </div>

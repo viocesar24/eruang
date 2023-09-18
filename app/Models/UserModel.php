@@ -42,7 +42,9 @@ class UserModel extends Model
     public function getUser($id = false)
     {
         if ($id === false) {
-            return $this->findAll();
+            return $this->select('users.*, pegawai.nama as nama_pegawai')
+                ->join('pegawai', 'users.pegawai_id = pegawai.id')
+                ->findAll();
         }
 
         return $this->where(['id' => $id])->first();

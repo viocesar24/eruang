@@ -112,14 +112,14 @@ class User extends BaseController
 
             // Menambahkan fungsi validateData untuk memvalidasi input dari form
             $rules = [
-                'username' => 'required|is_unique[users.username]',
+                'username' => 'required|is_unique[users.username]|min_length[3]|max_length[20]',
                 'password' => 'required|min_length[3]',
                 'pegawai_id' => 'required|is_unique[users.pegawai_id]'
             ];
 
             if ($this->validate($rules)) {
                 // Input valid
-                $username = $this->request->getPost('username');
+                $username = $this->request->getPost('username', FILTER_SANITIZE_STRING);
                 $password = $this->request->getPost('password');
                 $pegawai_id = $this->request->getPost('pegawai_id');
 
@@ -191,14 +191,14 @@ class User extends BaseController
 
             // Menambahkan fungsi validateData untuk memvalidasi input dari form
             $rules = [
-                'username' => 'required|is_unique[users.username]',
+                'username' => 'required|is_unique[users.username]|min_length[3]|max_length[20]',
                 'password' => 'required|min_length[3]',
                 'pegawai_id' => 'required|is_unique[users.pegawai_id]'
             ];
 
             if ($this->validate($rules)) {
                 // Input valid
-                $username = $this->request->getPost('username');
+                $username = $this->request->getPost('username', FILTER_SANITIZE_STRING);
                 $password = $this->request->getPost('password');
                 $pegawai_id = $this->request->getPost('pegawai_id');
 

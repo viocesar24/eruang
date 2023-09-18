@@ -20,8 +20,7 @@
             <div class="card" style="border-radius: 1rem;">
                 <div class="row g-0">
                     <div class="col-md-6 col-lg-5 d-none d-md-block">
-                        <img src="/office.webp" alt="login form" class="img-fluid"
-                            style="border-radius: 1rem 0 0 1rem;" />
+                        <img src="/office.webp" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                     </div>
                     <div class="col-md-6 col-lg-7 d-flex align-items-center">
                         <div class="card-body p-4 p-lg-5 text-black">
@@ -38,24 +37,23 @@
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="username">Username</label>
-                                    <input type="text" name="username" id="username"
-                                        class="form-control form-control-lg" required />
+                                    <input type="text" name="username" id="username" class="form-control form-control-lg" required minlength="3" maxlength="20" />
                                 </div>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="password">Kata Sandi</label>
-                                    <input type="password" name="password" id="password"
-                                        class="form-control form-control-lg" required />
+                                    <input type="password" name="password" id="password" class="form-control form-control-lg" required />
                                 </div>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="pegawai_id">Pilih Nama Pegawai</label>
-                                    <select name="pegawai_id" id="pegawai_id" class="form-select form-select-lg"
-                                        aria-label="Pilih Nama Pegawai..." required>
+                                    <select name="pegawai_id" id="pegawai_id" class="form-select form-select-lg" aria-label="Pilih Nama Pegawai..." required>
                                         <option selected disabled>Pilih Nama Pegawai...</option>
                                         <?php if (!empty($filtered_pegawai) && is_array($filtered_pegawai)): ?>
                                             <?php foreach ($filtered_pegawai as $item): ?>
-                                                <option name="pegawai_id" value="<?= esc($item['id']) ?>"><?= esc($item['nama']) ?></option>
+                                                <option name="pegawai_id" value="<?= esc($item['id']) ?>">
+                                                    <?= esc($item['nama']) ?>
+                                                </option>
                                             <?php endforeach ?>
                                         <?php else: ?>
                                             <option selected>Tidak Ada Daftar Pegawai</option>
@@ -69,8 +67,7 @@
                                     </div>
                                 </div>
 
-                                <p class="pb-lg-2" style="color: #393f81;">Sudah punya akun? <a href="/login"
-                                        style="color: #393f81;">Silahkan Login</a></p>
+                                <p class="pb-lg-2" style="color: #393f81;">Sudah punya akun? <a href="/login" style="color: #393f81;">Silahkan Login</a></p>
 
                             </form>
 
