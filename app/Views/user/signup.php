@@ -37,7 +37,7 @@
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="username">Username</label>
-                                    <input type="text" name="username" id="username" class="form-control form-control-lg" required minlength="3" maxlength="20" />
+                                    <input type="text" name="username" id="username" class="form-control form-control-lg" required minlength="3" maxlength="20" pattern="[a-zA-Z0-9]+" title="Hanya huruf dan angka yang diperbolehkan." />
                                 </div>
 
                                 <div class="form-outline mb-4">

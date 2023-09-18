@@ -123,6 +123,12 @@ class User extends BaseController
                 $password = $this->request->getPost('password');
                 $pegawai_id = $this->request->getPost('pegawai_id');
 
+                // Validasi input username dengan pola regex
+                if (!preg_match('/^[a-zA-Z0-9]+$/', $username)) {
+                    session()->setFlashdata('error', 'Username hanya boleh mengandung huruf dan angka.');
+                    return redirect()->to('/signup');
+                }
+
                 $userModel = model(UserModel::class);
 
                 // Mengecek jika pegawai_id valid
@@ -201,6 +207,12 @@ class User extends BaseController
                 $username = $this->request->getPost('username', FILTER_SANITIZE_STRING);
                 $password = $this->request->getPost('password');
                 $pegawai_id = $this->request->getPost('pegawai_id');
+
+                // Validasi input username dengan pola regex
+                if (!preg_match('/^[a-zA-Z0-9]+$/', $username)) {
+                    session()->setFlashdata('error', 'Username hanya boleh mengandung huruf dan angka.');
+                    return redirect()->to('/signup');
+                }
 
                 $userModel = model(UserModel::class);
 
