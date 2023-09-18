@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-md-6 col-lg-7 d-flex align-items-center">
                         <div class="card-body p-4 p-lg-5 text-black">
-                            <h1>Pendaftaran sementara ditutup, tolong hubungi admin untuk keterangan lebih lanjut.</h1>
+                            <h1>Pendaftaran sementara ditutup, mohon hubungi Admin untuk keterangan lebih lanjut.</h1>
                         </div>
                     </div>
                 </div>
