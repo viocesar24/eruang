@@ -364,4 +364,15 @@ class User extends BaseController
         session()->destroy();
         return redirect()->to('/peminjaman');
     }
+
+    public function signup_notice()
+    {
+        if (session()->get('user_id') !== null) {
+            return redirect()->to('/peminjaman');
+        }
+
+        return view('templates/header')
+            . view('user/notice')
+            . view('templates/footer');
+    }
 }

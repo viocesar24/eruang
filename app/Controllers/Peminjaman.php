@@ -82,7 +82,7 @@ class Peminjaman extends BaseController
             . view('templates/footer');
     }
 
-    public function create($id = null)
+    public function create()
     {
         if (!session()->get('user_id')) {
             return redirect()->to('/login');
@@ -96,7 +96,7 @@ class Peminjaman extends BaseController
         $modelRuangan = model(RuanganModel::class);
 
         $data = [
-            'user' => $modelUser->getUserWithPegawai($id),
+            'user' => $modelUser->getUserWithPegawai(),
             'pegawai' => $modelPegawai->getPegawai(),
             'ruangan' => $modelRuangan->getRuangan(),
             'title' => 'Buat ruangan',
@@ -223,7 +223,7 @@ class Peminjaman extends BaseController
         $modelRuangan = model(RuanganModel::class);
 
         $data = [
-            'user' => $modelUser->getUserWithPegawai(esc(session()->get('pegawai_id'))),
+            'user' => $modelUser->getUserWithPegawai(),
             'pegawai' => $modelPegawai->getPegawai(),
             'ruangan' => $modelRuangan->getRuangan(),
             'title' => 'Buat ruangan',
@@ -329,13 +329,13 @@ class Peminjaman extends BaseController
         // cari data peminjaman
         $peminjaman = $modelPeminjaman->find($id);
         if (!$peminjaman) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            throw PageNotFoundException::forPageNotFound();
         }
 
         // cari data ruangan
         $ruangan = $modelRuangan->find($peminjaman['id_ruangan']);
         if (!$ruangan) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            throw PageNotFoundException::forPageNotFound();
         }
 
         // ambil waktu sekarang dalam format date("H:i:s")

@@ -45,7 +45,7 @@ $routes->match(['get', 'post'], 'view', [Peminjaman::class, 'viewPeminjamanUser'
 $routes->match(['get', 'post'], 'peminjaman/export', [Peminjaman::class, 'export']);
 
 $routes->match(['get', 'post'], 'login', [User::class, 'login']);
-$routes->match(['get', 'post'], 'signup', [User::class, 'signup']);
+$routes->match(['get', 'post'], 'signup', [User::class, 'signup_notice']);
 $routes->match(['get', 'post'], 'logout', [User::class, 'logout']);
 $routes->match(['get', 'post'], 'profile', [User::class, 'profile']);
 $routes->match(['get', 'post'], 'user', [User::class, 'index']);
@@ -66,7 +66,7 @@ $routes->match(['get', 'post'], 'peminjaman/end/(:segment)', [Peminjaman::class,
 $routes->match(['get', 'post'], 'peminjaman/hapus/(:segment)', [Peminjaman::class, 'hapus']);
 
 $routes->match(['get', 'post'], 'login/(:segment)', [User::class, 'login']);
-$routes->match(['get', 'post'], 'signup/(:segment)', [User::class, 'signup']);
+$routes->match(['get', 'post'], 'signup/(:segment)', [User::class, 'signup_notice']);
 $routes->match(['get', 'post'], 'logout/(:segment)', [User::class, 'logout']);
 $routes->match(['get', 'post'], 'changePassword/(:segment)', [User::class, 'changePassword']);
 $routes->match(['get', 'post'], 'edit/(:segment)', [User::class, 'edit']);
