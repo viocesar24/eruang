@@ -10,24 +10,23 @@ class RuanganModel extends Model
 
     protected $allowedFields = ['nama'];
 
-    // public function getRuangan($id = false)
-    // {
-    //     if ($id === false) {
-    //         return $this->findAll();
-    //     }
-
-    //     return $this->where(['id' => $id])->first();
-    // }
-
     public function getRuangan($id = false)
     {
         if ($id === false) {
-            // Menggunakan whereNotIn untuk mengecualikan ruangan "auditorial"
-            // return $this->whereNotIn('nama', ['auditorial', 'pelayanan'])->findAll();
-            return $this->whereNotIn('nama', 'auditorial')->findAll();
+            return $this->findAll();
         }
 
         return $this->where(['id' => $id])->first();
     }
+
+    // public function getRuangan($id = false)
+    // {
+    //     if ($id === false) {
+    //         // Menggunakan whereNotIn untuk mengecualikan ruangan "auditorial"
+    //         return $this->whereNotIn('nama', ['auditorial', 'pelayanan'])->findAll();
+    //     }
+
+    //     return $this->where(['id' => $id])->first();
+    // }
 
 }
