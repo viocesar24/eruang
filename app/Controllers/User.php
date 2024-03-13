@@ -5,6 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\Exceptions\PageNotFoundException; // Add this line
 use App\Controllers\BaseController;
 use App\Models\UserModel;
+use App\Models\PegawaiModel;
 
 class User extends BaseController
 {

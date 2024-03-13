@@ -9,10 +9,16 @@ class Pegawai extends BaseController
 {
     public function index()
     {
+        if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            session()->setFlashdata('error', 'Anda tidak diperkenankan melihat data pegawai.');
+            return redirect()->to('/peminjaman');
+        }
+
         $model = model(PegawaiModel::class);
 
         $data = [
-            'pegawai'  => $model->getPegawai(),
+            'pegawai' => $model->getPegawai(),
             'title' => 'Pegawai archive',
         ];
 
@@ -23,6 +29,12 @@ class Pegawai extends BaseController
 
     public function view($id = null)
     {
+        if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            session()->setFlashdata('error', 'Anda tidak diperkenankan melihat data pegawai.');
+            return redirect()->to('/peminjaman');
+        }
+
         $model = model(PegawaiModel::class);
 
         $data['pegawai'] = $model->getPegawai($id);
@@ -40,6 +52,12 @@ class Pegawai extends BaseController
 
     public function create()
     {
+        if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            session()->setFlashdata('error', 'Anda tidak diperkenankan melihat data pegawai.');
+            return redirect()->to('/peminjaman');
+        }
+
         helper('form');
 
         // Checks whether the form is submitted.
@@ -53,9 +71,11 @@ class Pegawai extends BaseController
         $post = $this->request->getPost(['nama']);
 
         // Checks whether the submitted data passed the validation rules.
-        if (!$this->validateData($post, [
-            'nama'  => 'required',
-        ])) {
+        if (
+            !$this->validateData($post, [
+                'nama' => 'required',
+            ])
+        ) {
             // The validation fails, so returns the form.
             return view('templates/header', ['title' => 'Create a pegawai item'])
                 . view('pegawai/create')
@@ -65,7 +85,7 @@ class Pegawai extends BaseController
         $model = model(PegawaiModel::class);
 
         $model->save([
-            'nama'  => $post['nama'],
+            'nama' => $post['nama'],
         ]);
 
         return view('templates/header', ['title' => 'Create a pegawai item'])
