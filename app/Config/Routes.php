@@ -59,6 +59,8 @@ $routes->match(['get', 'post'], 'ruangan/create', [Ruangan::class, 'create']);
 
 $routes->match(['get', 'post'], 'pegawai', [Pegawai::class, 'index']);
 $routes->match(['get', 'post'], 'pegawai/create', [Pegawai::class, 'create']);
+$routes->match(['get', 'post'], 'pegawai/edit', [Pegawai::class, 'edit']);
+$routes->match(['get', 'post'], 'pegawai/edit/(:segment)', [Pegawai::class, 'edit']);
 $routes->match(['get', 'post'], 'pegawai/delete', [Pegawai::class, 'delete']);
 $routes->match(['get', 'post'], 'pegawai/delete/(:segment)', [Pegawai::class, 'delete']);
 

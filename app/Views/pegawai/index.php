@@ -23,7 +23,7 @@
     <?php foreach ($pegawai as $pegawai_item): ?>
 
         <h3>
-            <?= esc($pegawai_item['id']) ?>
+            <?= esc($pegawai_item['urutan']) ?>
         </h3>
 
         <div class="main">

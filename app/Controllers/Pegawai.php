@@ -70,12 +70,14 @@ class Pegawai extends BaseController
                 . view('templates/footer');
         }
 
-        $post = $this->request->getPost(['nama']);
+        // getPost nama and urutan
+        $post = $this->request->getPost(['nama', 'urutan']);
 
         // Checks whether the submitted data passed the validation rules.
         if (
             !$this->validateData($post, [
                 'nama' => 'required',
+                'urutan' => 'is_natural', // urutan harus berupa angka dan boleh null
             ])
         ) {
             // The validation fails, so returns the form.
@@ -88,11 +90,59 @@ class Pegawai extends BaseController
 
         $model->save([
             'nama' => $post['nama'],
+            'urutan' => $post['urutan'],
         ]);
 
         return view('templates/header', ['title' => 'Create a pegawai item'])
             . view('pegawai/success')
             . view('templates/footer');
+    }
+
+    // make edit function
+    public function edit($id = null)
+    {
+        if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            // Session tidak ada atau tidak sama dengan 58 dan 35, arahkan ke halaman login
+            session()->setFlashdata('error', 'Anda tidak diperkenankan melihat data pegawai.');
+            return redirect()->to('/peminjaman');
+        }
+
+        helper('form');
+
+        // Checks whether the form is submitted.
+        if (!$this->request->is('post')) {
+            // The form is not submitted, so retrieve the existing data and return the edit form.
+            $model = model(PegawaiModel::class);
+            $pegawai = $model->find($id);
+            return view('templates/header', ['title' => 'Edit pegawai item'])
+                . view('pegawai/edit', ['pegawai' => $pegawai])
+                . view('templates/footer');
+        }
+
+        // getPost nama and urutan
+        $post = $this->request->getPost(['id', 'nama', 'urutan']);
+
+        // Checks whether the submitted data passed the validation rules.
+        if (
+            !$this->validateData($post, [
+                'nama' => 'required',
+                'urutan' => 'is_natural', // urutan harus berupa angka dan boleh null
+            ])
+        ) {
+            // The validation fails, so returns the edit form with the existing data.
+            return view('templates/header', ['title' => 'Edit pegawai item'])
+                . view('pegawai/edit', ['pegawai' => $post])
+                . view('templates/footer');
+        }
+
+        $model = model(PegawaiModel::class);
+        // update the data where using where then update
+        $model->where('id', $this->request->getPost(['id']))->set($post)->update();
+        // make session set flashdata success message and redirect to pegawai
+        session()->setFlashdata('pegawaiSuccess', 'Data pegawai berhasil diubah.');
+
+        // return to pegawai
+        return redirect()->to('/pegawai');
     }
 
     public function delete()
