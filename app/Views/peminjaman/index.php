@@ -1,32 +1,32 @@
-<?php if (session()->has('editBerhasil')): ?>
+<?php if (session()->has('editBerhasil')) : ?>
     <div class="alert alert-success alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('editBerhasil') ?>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
-<?php elseif (session()->has('hapusBerhasil')): ?>
+<?php elseif (session()->has('hapusBerhasil')) : ?>
     <div class="alert alert-warning alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('hapusBerhasil') ?>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
-<?php elseif (session()->has('loginBerhasil')): ?>
+<?php elseif (session()->has('loginBerhasil')) : ?>
     <div class="alert alert-success alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('loginBerhasil') ?>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
-<?php elseif (session()->has('pinjamBerhasil')): ?>
+<?php elseif (session()->has('pinjamBerhasil')) : ?>
     <div class="alert alert-success alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('pinjamBerhasil') ?>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
-<?php elseif (session()->has('error')): ?>
+<?php elseif (session()->has('error')) : ?>
     <div class="alert alert-danger alert-dismissible" role="alert">
         <div>
             <?= session()->getFlashdata('error') ?>
@@ -45,8 +45,7 @@
         <div class="card-body">
             <div class="container px-3 py-3 px-md-3">
                 <div class="d-grid">
-                    <a class="btn btn-lg btn-info mb-2"
-                        href="/peminjaman/create/<?= esc(session()->get('pegawai_id'), 'url') ?>" role="button">
+                    <a class="btn btn-lg btn-info mb-2" href="/peminjaman/create/<?= esc(session()->get('pegawai_id'), 'url') ?>" role="button">
                         Pinjam Ruangan</a>
                 </div>
                 <div class="table-responsive">
@@ -63,8 +62,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (!empty($peminjaman) && is_array($peminjaman)): ?>
-                                <?php foreach ($peminjaman as $peminjaman_item): ?>
+                            <?php if (!empty($peminjaman) && is_array($peminjaman)) : ?>
+                                <?php foreach ($peminjaman as $peminjaman_item) : ?>
                                     <tr>
                                         <td>
                                             <?= esc($peminjaman_item['nama_pegawai']) ?>
@@ -87,13 +86,11 @@
                                         <td>
                                             <?php if (session()->get('pegawai_id') === esc($peminjaman_item['id_pegawai']) || (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35)) { ?>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#modalEdit<?= esc($peminjaman_item['id']) ?>">
+                                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit<?= esc($peminjaman_item['id']) ?>">
                                                     Edit
                                                 </button>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#modalHapus<?= esc($peminjaman_item['id']) ?>">
+                                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= esc($peminjaman_item['id']) ?>">
                                                     Hapus
                                                 </button>
                                                 <?php
@@ -114,21 +111,15 @@
                                                 <form action="/peminjaman/edit" method="post">
                                                     <?= csrf_field() ?>
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="modalEdit<?= esc($peminjaman_item['id']) ?>"
-                                                        tabindex="-1"
-                                                        aria-labelledby="exampleModalLabelEdit<?= esc($peminjaman_item['id']) ?>"
-                                                        aria-hidden="true">
-                                                        <div
-                                                            class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                                                    <div class="modal fade" id="modalEdit<?= esc($peminjaman_item['id']) ?>" tabindex="-1" aria-labelledby="exampleModalLabelEdit<?= esc($peminjaman_item['id']) ?>" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5"
-                                                                        id="exampleModalLabelEdit<?= esc($peminjaman_item['id']) ?>">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabelEdit<?= esc($peminjaman_item['id']) ?>">
                                                                         Edit Peminjaman oleh
                                                                         <?= session()->get('pegawai_id_user') ?>
                                                                     </h1>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                        aria-label="Tutup"></button>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                                                 </div>
                                                                 <div class="modal-body">
 
@@ -143,18 +134,13 @@
                                                                                 bagian!</p>
                                                                         </div>
 
-                                                                        <input type="text" class="form-control" name="id"
-                                                                            id="input00" value="<?= esc($peminjaman_item['id']) ?>"
-                                                                            readonly hidden>
+                                                                        <input type="text" class="form-control" name="id" id="input00" value="<?= esc($peminjaman_item['id']) ?>" readonly hidden>
 
                                                                         <div class="form-outline form-white mb-3">
                                                                             <label class="form-label" for="inputGroupSelect01">
                                                                                 Nama Pegawai</label>
-                                                                            <select name="id_pegawai" class="form-select"
-                                                                                id="inputGroupSelect01">
-                                                                                <option name="id_pegawai"
-                                                                                    value="<?= esc($peminjaman_item['id_pegawai']) ?>"
-                                                                                    selected>
+                                                                            <select name="id_pegawai" class="form-select" id="inputGroupSelect01">
+                                                                                <option name="id_pegawai" value="<?= esc($peminjaman_item['id_pegawai']) ?>" selected>
                                                                                     <?= esc($peminjaman_item['nama_pegawai']) ?>
                                                                                 </option>
                                                                             </select>
@@ -163,21 +149,17 @@
                                                                         <div class="form-outline form-white mb-3">
                                                                             <label class="form-label" for="inputGroupSelect02">
                                                                                 Nama Ruangan</label>
-                                                                            <select name="id_ruangan" class="form-select"
-                                                                                id="inputGroupSelect02" required>
-                                                                                <option name="id_ruangan"
-                                                                                    value="<?= esc($peminjaman_item['id_ruangan']) ?>"
-                                                                                    selected>
+                                                                            <select name="id_ruangan" class="form-select" id="inputGroupSelect02" required>
+                                                                                <option name="id_ruangan" value="<?= esc($peminjaman_item['id_ruangan']) ?>" selected>
                                                                                     <?= esc($peminjaman_item['nama_ruangan']) ?>
                                                                                 </option>
-                                                                                <?php if (!empty($ruangan) && is_array($ruangan)): ?>
-                                                                                    <?php foreach ($ruangan as $ruangan_item): ?>
-                                                                                        <?php if ($ruangan_item['id'] != $peminjaman_item['id_ruangan']): ?>
-                                                                                            <option name="id_ruangan"
-                                                                                                value="<?= esc($ruangan_item['id']) ?>"><?= esc($ruangan_item['nama']) ?></option>
+                                                                                <?php if (!empty($ruangan) && is_array($ruangan)) : ?>
+                                                                                    <?php foreach ($ruangan as $ruangan_item) : ?>
+                                                                                        <?php if ($ruangan_item['id'] != $peminjaman_item['id_ruangan']) : ?>
+                                                                                            <option name="id_ruangan" value="<?= esc($ruangan_item['id']) ?>"><?= esc($ruangan_item['nama']) ?></option>
                                                                                         <?php endif ?>
                                                                                     <?php endforeach ?>
-                                                                                <?php else: ?>
+                                                                                <?php else : ?>
                                                                                     <h3>Tidak Ada Ruangan</h3>
                                                                                     <p>Unable to find any ruangan for you.</p>
                                                                                 <?php endif ?>
@@ -187,38 +169,24 @@
                                                                         <div class="form-outline form-white mb-3">
                                                                             <label class="form-label" for="tujuan_peminjaman">Tujuan
                                                                                 Peminjaman</label>
-                                                                            <textarea class="form-control" name="acara"
-                                                                                aria-label="Tujuan Peminjaman"
-                                                                                id="tujuan_peminjaman"
-                                                                                required><?= esc($peminjaman_item['acara']) ?></textarea>
+                                                                            <textarea class="form-control" name="acara" aria-label="Tujuan Peminjaman" id="tujuan_peminjaman" required><?= esc($peminjaman_item['acara']) ?></textarea>
                                                                         </div>
 
                                                                         <div class="form-outline form-white mb-3">
-                                                                            <label class="form-label"
-                                                                                for="tanggal_peminjaman">Tanggal Peminjaman:</label>
-                                                                            <input type="text"
-                                                                                class="form-control tanggal_peminjaman"
-                                                                                id="tanggal_peminjaman" name="tanggal"
-                                                                                value="<?= esc($peminjaman_item['tanggal']) ?>"
-                                                                                min="<?= date('Y-m-d') ?>" required>
+                                                                            <label class="form-label" for="tanggal_peminjaman">Tanggal Peminjaman:</label>
+                                                                            <input type="text" class="form-control tanggal_peminjaman" id="tanggal_peminjaman" name="tanggal" value="<?= esc($peminjaman_item['tanggal']) ?>" min="<?= date('Y-m-d') ?>" required>
                                                                         </div>
 
                                                                         <div class="form-outline form-white mb-3">
                                                                             <label class="form-label" for="waktu_mulai">
                                                                                 Waktu Mulai:</label>
-                                                                            <input type="time" class="form-control" id="waktu_mulai"
-                                                                                name="waktu_mulai"
-                                                                                value="<?= esc($peminjaman_item['waktu_mulai']) ?>"
-                                                                                required>
+                                                                            <input type="time" class="form-control" id="waktu_mulai" name="waktu_mulai" value="<?= esc($peminjaman_item['waktu_mulai']) ?>" required>
                                                                         </div>
 
                                                                         <div class="form-outline form-white mb-3">
                                                                             <label class="form-label" for="waktu_selesai">
                                                                                 Waktu Selesai:</label>
-                                                                            <input type="time" class="form-control"
-                                                                                id="waktu_selesai" name="waktu_selesai"
-                                                                                value="<?= esc($peminjaman_item['waktu_selesai']) ?>"
-                                                                                required>
+                                                                            <input type="time" class="form-control" id="waktu_selesai" name="waktu_selesai" value="<?= esc($peminjaman_item['waktu_selesai']) ?>" required>
                                                                         </div>
 
                                                                     </div>
@@ -226,10 +194,8 @@
 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Tutup</button>
-                                                                    <button type="submit" name="submit"
-                                                                        class="btn btn-primary">Simpan</button>
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                    <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -238,29 +204,20 @@
                                                 <form action="/peminjaman/hapus" method="post">
                                                     <?= csrf_field() ?>
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="modalHapus<?= esc($peminjaman_item['id']) ?>"
-                                                        tabindex="-1"
-                                                        aria-labelledby="exampleModalLabelHapus<?= esc($peminjaman_item['id']) ?>"
-                                                        aria-hidden="true">
+                                                    <div class="modal fade" id="modalHapus<?= esc($peminjaman_item['id']) ?>" tabindex="-1" aria-labelledby="exampleModalLabelHapus<?= esc($peminjaman_item['id']) ?>" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5"
-                                                                        id="exampleModalLabelHapus<?= esc($peminjaman_item['id']) ?>">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabelHapus<?= esc($peminjaman_item['id']) ?>">
                                                                         Hapus Peminjaman </h1>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                        aria-label="Tutup"></button>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                                                 </div>
                                                                 <div class="modal-body text-center">
                                                                     <h2>Apakah Anda Yakin?</h2>
-                                                                    <input type="hidden" class="form-control text-center"
-                                                                        placeholder="ID" aria-label="ID" aria-describedby="hapusID"
-                                                                        name="id" value="<?= esc($peminjaman_item['id']) ?>"
-                                                                        readonly>
+                                                                    <input type="hidden" class="form-control text-center" placeholder="ID" aria-label="ID" aria-describedby="hapusID" name="id" value="<?= esc($peminjaman_item['id']) ?>" readonly>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Tutup</button>
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                                                     <button type="submit" class="btn btn-primary">Hapus</button>
                                                                 </div>
                                                             </div>
@@ -271,11 +228,22 @@
                                         </td>
                                     </tr>
                                 <?php endforeach ?>
-                            <?php else: ?>
+                            <?php else : ?>
                                 <h3 class="text-center">Tidak Ada Peminjaman</h3>
                                 <p class="text-center">Unable to find any peminjaman for you.</p>
                             <?php endif ?>
                         </tbody>
+                        <!-- Tambahkan bagian ini setelah tag <tbody> dan sebelum tag penutup </table> -->
+                        <tfoot>
+                            <tr>
+                                <th colspan="7"> <!-- Sesuaikan colspan dengan jumlah kolom tabel Anda -->
+                                    <div id="dateFilter">
+                                        <input type="text" id="minDate" class="datepicker" placeholder="Dari tanggal">
+                                        <input type="text" id="maxDate" class="datepicker" placeholder="Sampai tanggal">
+                                    </div>
+                                </th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

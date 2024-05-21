@@ -27,11 +27,21 @@ class Peminjaman extends BaseController
         $model = model(PeminjamanModel::class);
         $modelRuangan = model(RuanganModel::class);
 
-        $data = [
-            'peminjaman' => $model->where('tanggal >=', date('Y-m-d'))->getPeminjaman(),
-            'ruangan' => $modelRuangan->getRuangan(),
-            'title' => 'Daftar Peminjaman Semua User',
-        ];
+        # Check if the user is an admin with pegawai id 58 or 35
+        if (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35) {
+            $data = [
+                'peminjaman' => $model->getPeminjaman(),
+                'ruangan' => $modelRuangan->getRuangan(),
+                'title' => 'Daftar Peminjaman Semua User',
+            ];
+        # Check if there is no user log in or the user is not an admin with pegawai id 58 or 35
+        } elseif (!session()->has('user_id') || (session()->has('user_id') && session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+            $data = [
+                'peminjaman' => $model->where('tanggal >=', date('Y-m-d'))->getPeminjaman(),
+                'ruangan' => $modelRuangan->getRuangan(),
+                'title' => 'Daftar Peminjaman Semua User',
+            ];
+        }
 
         return view('templates/header', $data)
             . view('peminjaman/index')
