@@ -24,10 +24,9 @@
 
         // Inisialisasi Bootstrap Datepicker
         $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy-mm-dd', // Sesuaikan format dengan format tanggal dalam tabel Anda
             autoclose: true,
-            todayHighlight: true,
-            language: 'id'
+            todayHighlight: true
         });
 
         // Fungsi untuk filter berdasarkan rentang tanggal
@@ -35,6 +34,14 @@
             var minDate = $('#minDate').datepicker("getDate");
             var maxDate = $('#maxDate').datepicker("getDate");
             var startDate = new Date(data[3] || 0); // Menggunakan indeks kolom tanggal dari tabel Anda
+
+            // Menyesuaikan waktu ke awal hari untuk minDate dan akhir hari untuk maxDate
+            if (minDate) {
+                minDate.setHours(0, 0, 0, 0);
+            }
+            if (maxDate) {
+                maxDate.setHours(23, 59, 59, 999);
+            }
 
             if (
                 (minDate === null && maxDate === null) ||
