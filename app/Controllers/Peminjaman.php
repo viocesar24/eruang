@@ -274,8 +274,8 @@ class Peminjaman extends BaseController
         $id_ruangan = $post['id_ruangan'];
         $tanggal = $post['tanggal'];
         $acara = $post['acara'];
-        $waktu_mulai = $post['waktu_mulai'];
-        $waktu_selesai = $post['waktu_selesai'];
+        $waktu_mulai = date('H:i:s', strtotime($post['waktu_mulai'] . ' ' . date_default_timezone_get()));
+        $waktu_selesai = date('H:i:s', strtotime($post['waktu_selesai'] . ' ' . date_default_timezone_get()));
 
         // Mengubah string waktu menjadi integer
         $waktu_mulai_int = strtotime($waktu_mulai);
