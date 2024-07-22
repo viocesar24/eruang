@@ -34,7 +34,7 @@ class Peminjaman extends BaseController
                 'ruangan' => $modelRuangan->getRuangan(),
                 'title' => 'Daftar Peminjaman Semua User',
             ];
-        # Check if there is no user log in or the user is not an admin with pegawai id 58 or 35
+            # Check if there is no user log in or the user is not an admin with pegawai id 58 or 35
         } elseif (!session()->has('user_id') || (session()->has('user_id') && session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
             $data = [
                 'peminjaman' => $model->where('tanggal >=', date('Y-m-d'))->getPeminjaman(),
@@ -145,8 +145,8 @@ class Peminjaman extends BaseController
         $id_ruangan = $post['id_ruangan'];
         $tanggal = $post['tanggal'];
         $acara = $post['acara'];
-        $waktu_mulai = $post['waktu_mulai'];
-        $waktu_selesai = $post['waktu_selesai'];
+        $waktu_mulai = date('H:i:s', strtotime($post['waktu_mulai'] . ' ' . date_default_timezone_get()));
+        $waktu_selesai = date('H:i:s', strtotime($post['waktu_selesai'] . ' ' . date_default_timezone_get()));
 
         // Mengubah string waktu menjadi integer
         $waktu_mulai_int = strtotime($waktu_mulai);
@@ -200,7 +200,7 @@ class Peminjaman extends BaseController
 
                     session()->setFlashdata('pinjamBerhasil', 'Anda Berhasil Meminjam Ruangan!');
                     if (!session()->has('pegawai_id') || (session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
-                        return redirect()->to('/view' . '/' . esc(session()->get('pegawai_id'), 'url'));
+                        return redirect()->to('/view');
                     } else {
                         return redirect()->to('/peminjaman');
                     }
