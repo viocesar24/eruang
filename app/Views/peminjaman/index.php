@@ -58,6 +58,10 @@
                                 <th scope="col">Tanggal</th>
                                 <th scope="col">Waktu Mulai</th>
                                 <th scope="col">Waktu Selesai</th>
+                                <?php if (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35) { ?>
+                                    <th scope="col">Created At</th>
+                                    <th scope="col">Updated At</th>
+                                <?php } ?>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
@@ -83,6 +87,14 @@
                                         <td>
                                             <?= esc($peminjaman_item['waktu_selesai']) ?>
                                         </td>
+                                        <?php if (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35) { ?>
+                                            <td>
+                                                <?= esc($peminjaman_item['created_at']) ?>
+                                            </td>
+                                            <td>
+                                                <?= esc($peminjaman_item['updated_at']) ?>
+                                            </td>
+                                        <?php } ?>
                                         <td>
                                             <?php if (session()->get('pegawai_id') === esc($peminjaman_item['id_pegawai']) || (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35)) { ?>
                                                 <!-- Button trigger modal -->
