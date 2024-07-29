@@ -20,6 +20,10 @@ class CreateTables extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 50,
             ],
+            'urutan' => [
+                'type' => 'INT',
+                'constraint' => 11,
+            ],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('pegawai');
@@ -69,6 +73,16 @@ class CreateTables extends Migration
             ],
             'waktu_selesai' => [
                 'type' => 'TIME',
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+            ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
             ],
         ]);
         $this->forge->addKey('id', true);
