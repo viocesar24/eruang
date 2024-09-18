@@ -27,15 +27,19 @@ class Peminjaman extends BaseController
         $model = model(PeminjamanModel::class);
         $modelRuangan = model(RuanganModel::class);
 
-        # Check if the user is an admin with pegawai id 58 or 35
+        // Mendapatkan tanggal 1 bulan sebelum hari ini
+        $tanggal_sebulan_lalu = date('Y-m-d', strtotime('-1 month'));
+
+        // Check if the user is an admin with pegawai id 58 or 35
         if (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35) {
             $data = [
-                'peminjaman' => $model->getPeminjaman(),
+                'peminjaman' => $model->where('tanggal >=', $tanggal_sebulan_lalu)->getPeminjaman(),
                 'ruangan' => $modelRuangan->getRuangan(),
                 'title' => 'Daftar Peminjaman Semua User',
             ];
-            # Check if there is no user log in or the user is not an admin with pegawai id 58 or 35
-        } elseif (!session()->has('user_id') || (session()->has('user_id') && session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
+        }
+        // Check if there is no user logged in or the user is not an admin with pegawai id 58 or 35
+        elseif (!session()->has('user_id') || (session()->has('user_id') && session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
             $data = [
                 'peminjaman' => $model->where('tanggal >=', date('Y-m-d'))->getPeminjaman(),
                 'ruangan' => $modelRuangan->getRuangan(),
