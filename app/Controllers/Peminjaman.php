@@ -166,7 +166,29 @@ class Peminjaman extends BaseController
         } else {
             // Mengecek apakah ada data waktu yang tumpang tindih
             $model = model(PeminjamanModel::class);
-            $result = $model->query("SELECT * FROM peminjaman WHERE id_ruangan = ? AND tanggal = ? AND (? < waktu_selesai AND ? > waktu_mulai))", [$id_ruangan, $tanggal, $waktu_mulai, $waktu_selesai, $waktu_mulai, $waktu_selesai])->getResult();
+            $result = $model->query("
+                SELECT * FROM peminjaman 
+                WHERE id_ruangan = ? 
+                AND tanggal = ? 
+                AND (
+                    (? >= waktu_mulai AND ? <= waktu_selesai) -- Cek jika waktu mulai baru berada di antara atau sama dengan waktu mulai/selesai peminjaman lain
+                    OR 
+                    (? >= waktu_mulai AND ? <= waktu_selesai) -- Cek jika waktu selesai baru berada di antara atau sama dengan waktu mulai/selesai peminjaman lain
+                    OR
+                    (waktu_mulai >= ? AND waktu_mulai <= ?) -- Cek jika waktu mulai peminjaman lain berada di antara waktu mulai dan selesai baru
+                    OR
+                    (waktu_selesai >= ? AND waktu_selesai <= ?) -- Cek jika waktu selesai peminjaman lain berada di antara waktu mulai dan selesai baru
+                    OR
+                    (? < waktu_mulai AND ? > waktu_selesai) -- Cek jika peminjaman baru mencakup keseluruhan peminjaman lain
+                )
+            ", [
+                $id_ruangan, $tanggal, 
+                $waktu_mulai, $waktu_mulai, // Untuk cek waktu mulai baru berada di antara waktu peminjaman lain
+                $waktu_selesai, $waktu_selesai, // Untuk cek waktu selesai baru berada di antara waktu peminjaman lain
+                $waktu_mulai, $waktu_selesai, // Untuk cek waktu mulai peminjaman lain berada di antara waktu baru
+                $waktu_mulai, $waktu_selesai, // Untuk cek waktu selesai peminjaman lain berada di antara waktu baru
+                $waktu_mulai, $waktu_selesai // Untuk cek jika peminjaman baru mencakup keseluruhan peminjaman lain
+            ])->getResult();
 
             // Jika tidak ada data waktu yang tumpang tindih
             if (empty($result)) {
