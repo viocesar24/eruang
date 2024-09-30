@@ -166,7 +166,7 @@ class Peminjaman extends BaseController
         } else {
             // Mengecek apakah ada data waktu yang tumpang tindih
             $model = model(PeminjamanModel::class);
-            $result = $model->query("SELECT * FROM peminjaman WHERE id_ruangan = ? AND tanggal = ? AND (waktu_mulai BETWEEN ? AND ? OR waktu_selesai BETWEEN ? AND ?)", [$id_ruangan, $tanggal, $waktu_mulai, $waktu_selesai, $waktu_mulai, $waktu_selesai])->getResult();
+            $result = $model->query("SELECT * FROM peminjaman WHERE id_ruangan = ? AND tanggal = ? AND (? < waktu_selesai AND ? > waktu_mulai))", [$id_ruangan, $tanggal, $waktu_mulai, $waktu_selesai, $waktu_mulai, $waktu_selesai])->getResult();
 
             // Jika tidak ada data waktu yang tumpang tindih
             if (empty($result)) {
