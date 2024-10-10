@@ -352,7 +352,7 @@ class Peminjaman extends BaseController
                     return redirect()->back();
                 } else {
                     // Menyimpan data ke database
-                    $model->replace([
+                    $model->save([
                         'id' => $id,
                         'id_pegawai' => $id_pegawai,
                         'id_ruangan' => $id_ruangan,
