@@ -397,21 +397,21 @@ class Peminjaman extends BaseController
         }
 
         // Ambil waktu sekarang
-        $waktu_sekarang = date("H:i:s");
+        $waktu_sekarang = date("H:i");
 
-        // Update waktu_mulai menjadi waktu sekarang dikurangi 2 detik
-        $timestamp_mulai = strtotime($waktu_sekarang) - 2; // kurangi 2 detik
-        $peminjaman['waktu_mulai'] = date("H:i:s", $timestamp_mulai);
+        // Update waktu_mulai menjadi waktu sekarang dikurangi 2 menit
+        $timestamp_mulai = strtotime($waktu_sekarang . ':00') - 120; // kurangi 120 detik (2 menit)
+        $peminjaman['waktu_mulai'] = date("H:i:00", $timestamp_mulai); // tambahkan detik 00
 
-        // Update waktu_selesai menjadi waktu sekarang dikurangi 1 detik
-        $timestamp_selesai = strtotime($waktu_sekarang) - 1; // kurangi 1 detik
-        $peminjaman['waktu_selesai'] = date("H:i:s", $timestamp_selesai);
+        // Update waktu_selesai menjadi waktu sekarang dikurangi 1 menit
+        $timestamp_selesai = strtotime($waktu_sekarang . ':00') - 60; // kurangi 60 detik (1 menit)
+        $peminjaman['waktu_selesai'] = date("H:i:00", $timestamp_selesai); // tambahkan detik 00
 
         // Simpan perubahan ke database
         $modelPeminjaman->save($peminjaman);
 
         // Redirect ke halaman view dengan pesan sukses
-        session()->setFlashdata('endBerhasil', 'Anda Berhasil Mengakhiri Peminjaman!');
+        session()->setFlashdata('pinjamBerhasil', 'Anda Telah Mengakhiri Peminjaman!');
         return redirect()->back();
     }
 
