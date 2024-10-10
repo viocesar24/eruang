@@ -399,12 +399,13 @@ class Peminjaman extends BaseController
         // Ambil waktu sekarang
         $waktu_sekarang = date("H:i:s");
 
-        // Update waktu_mulai dengan waktu sekarang
-        $peminjaman['waktu_mulai'] = $waktu_sekarang;
+        // Update waktu_mulai menjadi waktu sekarang dikurangi 2 detik
+        $timestamp_mulai = strtotime($waktu_sekarang) - 2; // kurangi 2 detik
+        $peminjaman['waktu_mulai'] = date("H:i:s", $timestamp_mulai);
 
-        // Update waktu_selesai menjadi waktu sekarang ditambah 1 detik
-        $timestamp = strtotime($waktu_sekarang) + 1; 
-        $peminjaman['waktu_selesai'] = date("H:i:s", $timestamp);
+        // Update waktu_selesai menjadi waktu sekarang dikurangi 1 detik
+        $timestamp_selesai = strtotime($waktu_sekarang) - 1; // kurangi 1 detik
+        $peminjaman['waktu_selesai'] = date("H:i:s", $timestamp_selesai);
 
         // Simpan perubahan ke database
         $modelPeminjaman->save($peminjaman);
