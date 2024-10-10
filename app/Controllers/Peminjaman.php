@@ -396,22 +396,20 @@ class Peminjaman extends BaseController
             throw PageNotFoundException::forPageNotFound();
         }
 
-        // ambil waktu sekarang dalam format date("H:i:s")
-        $peminjaman['waktu_selesai'] = date("H:i:s");
+        // Ambil waktu sekarang
+        $waktu_sekarang = date("H:i:s");
 
-        // ubah waktu sekarang menjadi timestamp
-        $timestamp = strtotime($peminjaman['waktu_selesai']);
+        // Update waktu_mulai dengan waktu sekarang
+        $peminjaman['waktu_mulai'] = $waktu_sekarang;
 
-        // kurangi 60 detik dari timestamp
-        $timestamp = $timestamp - 1;
-
-        // ubah timestamp kembali menjadi format date("H:i:s")
+        // Update waktu_selesai menjadi waktu sekarang ditambah 1 detik
+        $timestamp = strtotime($waktu_sekarang) + 1; 
         $peminjaman['waktu_selesai'] = date("H:i:s", $timestamp);
 
-        // simpan perubahan ke database
+        // Simpan perubahan ke database
         $modelPeminjaman->save($peminjaman);
 
-        // redirect ke halaman view dengan pesan sukses
+        // Redirect ke halaman view dengan pesan sukses
         session()->setFlashdata('endBerhasil', 'Anda Berhasil Mengakhiri Peminjaman!');
         return redirect()->back();
     }
