@@ -319,6 +319,7 @@ class Peminjaman extends BaseController
                 SELECT * FROM peminjaman 
                 WHERE id_ruangan = ? 
                 AND tanggal = ? 
+                AND id != ? -- Tambahkan pengecualian peminjaman yang sedang diedit
                 AND (
                     (? >= waktu_mulai AND ? <= waktu_selesai) -- Cek jika waktu mulai baru berada di antara atau sama dengan waktu mulai/selesai peminjaman lain
                     OR 
@@ -331,7 +332,7 @@ class Peminjaman extends BaseController
                     (? < waktu_mulai AND ? > waktu_selesai) -- Cek jika peminjaman baru mencakup keseluruhan peminjaman lain
                 )
             ", [
-                $id_ruangan, $tanggal, 
+                $id_ruangan, $tanggal, $id, // Tambahkan $id untuk pengecualian peminjaman yang sedang diedit
                 $waktu_mulai, $waktu_mulai, // Untuk cek waktu mulai baru berada di antara waktu peminjaman lain
                 $waktu_selesai, $waktu_selesai, // Untuk cek waktu selesai baru berada di antara waktu peminjaman lain
                 $waktu_mulai, $waktu_selesai, // Untuk cek waktu mulai peminjaman lain berada di antara waktu baru
