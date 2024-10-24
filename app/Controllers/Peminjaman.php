@@ -126,21 +126,16 @@ class Peminjaman extends BaseController
 
         $post = $this->request->getPost(['id_pegawai', 'id_ruangan', 'tanggal', 'acara', 'waktu_mulai', 'waktu_selesai']);
 
-        // Checks whether the submitted data passed the validation rules.
-        if (
-            !$this->validateData($post, [
-                'id_pegawai' => 'required',
-                'id_ruangan' => 'required',
-                'acara' => 'required',
-                'tanggal' => 'required',
-                'waktu_mulai' => 'required',
-                'waktu_selesai' => 'required',
-            ])
-        ) {
-            // The validation fails, so returns the form.
-            return view('templates/header', $data)
-                . view('peminjaman/create')
-                . view('templates/footer');
+        // Validasi Input
+        if (!$this->validate([
+            'id_pegawai' => 'required',
+            'id_ruangan' => 'required',
+            'acara' => 'required',
+            'tanggal' => 'required',
+            'waktu_mulai' => 'required',
+            'waktu_selesai' => 'required'
+        ])) {
+            return redirect()->back()->withInput()->with('error', 'Validasi gagal, silakan periksa input Anda.');
         }
 
         $model = model(PeminjamanModel::class);
@@ -159,10 +154,11 @@ class Peminjaman extends BaseController
         // Membandingkan nilai waktu
         if ($waktu_mulai_int >= $waktu_selesai_int) {
             // Menampilkan pesan error jika waktu mulai lebih besar atau sama dengan waktu selesai
-            session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu Selesai Harus Lebih Besar dari Waktu Mulai.');
-            return view('templates/header', $data)
-                . view('peminjaman/create')
-                . view('templates/footer');
+            // session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu Selesai Harus Lebih Besar dari Waktu Mulai.');
+            return redirect()->back()->withInput()->with('error', 'Waktu Selesai Harus Lebih Besar dari Waktu Mulai.');
+            // return view('templates/header', $data)
+            //     . view('peminjaman/create')
+            //     . view('templates/footer');
         } else {
             // Mengecek apakah ada data waktu yang tumpang tindih
             $model = model(PeminjamanModel::class);
@@ -202,17 +198,19 @@ class Peminjaman extends BaseController
 
                 // Jika data pegawai tidak ditemukan, maka input tidak valid
                 if ($ruangan == null) {
-                    session()->setFlashdata('error', 'ID Ruangan tidak valid.');
-                    return redirect()->to('peminjaman/create');
+                    // session()->setFlashdata('error', 'ID Ruangan tidak valid.');
+                    return redirect()->back()->withInput()->with('error', 'ID Ruangan tidak valid.');
+                    // return redirect()->to('peminjaman/create');
                 }
 
                 // Membandingkan data waktu dengan tanggal dan waktu sekarang
                 if ($tanggal < $tanggal_sekarang || ($tanggal == $tanggal_sekarang && ($waktu_mulai < $waktu_sekarang || $waktu_selesai < $waktu_sekarang))) {
                     // Menampilkan pesan error jika data waktu kurang dari tanggal dan waktu sekarang
-                    session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
-                    return view('templates/header', $data)
-                        . view('peminjaman/create')
-                        . view('templates/footer');
+                    // session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
+                    return redirect()->back()->withInput()->with('error', 'Tanggal dan Waktu yang Anda Pilih Sudah Berlalu.');
+                    // return view('templates/header', $data)
+                    //     . view('peminjaman/create')
+                    //     . view('templates/footer');
                 } else {
                     // Menyimpan data ke database
                     $model->save([
@@ -233,10 +231,11 @@ class Peminjaman extends BaseController
                 }
             } else {
                 // Menampilkan pesan error
-                session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu yang Anda Pilih Sudah Terisi.');
-                return view('templates/header', $data)
-                    . view('peminjaman/create')
-                    . view('templates/footer');
+                // session()->setFlashdata('error', 'Anda Tidak Berhasil Meminjam Ruangan, Waktu yang Anda Pilih Sudah Terisi.');
+                return redirect()->back()->withInput()->with('error', 'Waktu yang Anda Pilih Sudah Terisi.');
+                // return view('templates/header', $data)
+                //     . view('peminjaman/create')
+                //     . view('templates/footer');
             }
         }
     }

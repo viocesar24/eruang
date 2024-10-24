@@ -66,7 +66,10 @@
                                                 <option selected disabled>Pilih Nama Pegawai...</option>
                                                 <?php if (!empty($pegawai) && is_array($pegawai)): ?>
                                                     <?php foreach ($pegawai as $pegawai_item): ?>
-                                                        <option name="id_pegawai" value="<?= esc($pegawai_item['id']) ?>"><?= esc($pegawai_item['nama']) ?></option>
+                                                        <option name="id_pegawai" value="<?= esc($pegawai_item['id']) ?>"
+                                                            <?= set_select('id_pegawai', $pegawai_item['id']) ?>>
+                                                            <?= esc($pegawai_item['nama']) ?>
+                                                        </option>
                                                     <?php endforeach ?>
                                                 <?php else: ?>
                                                     <option selected>Tidak Ada Daftar Pegawai</option>
@@ -83,7 +86,9 @@
                                         <option value="<?= null ?>" selected>Pilih Ruangan...</option>
                                         <?php if (!empty($ruangan) && is_array($ruangan)): ?>
                                             <?php foreach ($ruangan as $ruangan_item): ?>
-                                                <option name="id_ruangan" value="<?= esc($ruangan_item['id']) ?>"><?= esc($ruangan_item['nama']) ?>
+                                                <option name="id_ruangan" value="<?= esc($ruangan_item['id']) ?>"
+                                                    <?= set_select('id_ruangan', $ruangan_item['id']) ?>>
+                                                    <?= esc($ruangan_item['nama']) ?>
                                                 </option>
                                             <?php endforeach ?>
                                         <?php else: ?>
@@ -97,28 +102,26 @@
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="detail_acara">Tujuan Pemakaian</label>
                                     <textarea class="form-control" name="acara" id="detail_acara"
-                                        aria-label="Tujuan Pemakaian" required></textarea>
+                                        aria-label="Tujuan Pemakaian" required><?= set_value('acara') ?></textarea>
                                 </div>
 
                                 <!-- Tanggal Peminjaman -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="tanggal_peminjaman">Tanggal Peminjaman:</label>
                                     <input type="text" class="form-control tanggal_peminjaman" id="tanggal_peminjaman"
-                                        name="tanggal" required>
+                                        name="tanggal" value="<?= set_value('tanggal') ?>" required>
                                 </div>
 
                                 <!-- Waktu Kapan Ruangan Akan Dipinjam -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="waktu_mulai">Waktu Mulai Peminjaman</label>
-                                    <input type="time" class="form-control" id="waktu_mulai" name="waktu_mulai"
-                                        required>
+                                    <input type="time" class="form-control" id="waktu_mulai" name="waktu_mulai" value="<?= set_value('waktu_mulai') ?>" required>
                                 </div>
 
                                 <!-- Waktu Kapan Ruangan Selesai Dipinjam -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="waktu_selesai">Waktu Selesai Peminjaman</label>
-                                    <input type="time" class="form-control" id="waktu_selesai" name="waktu_selesai"
-                                        required>
+                                    <input type="time" class="form-control" id="waktu_selesai" name="waktu_selesai" value="<?= set_value('waktu_selesai') ?>" required>
                                 </div>
 
                                 <!-- Submit button -->
