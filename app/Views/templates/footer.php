@@ -6,20 +6,19 @@
 <!-- Link ke file Bootstrap Datepicker jQuery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.id.min.js"></script>
-<!-- Link ke file JavaScript DataTables -->
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<!-- Datatables CDN -->
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 <script>
     // Wait for the HTML document to finish loading
     $(document).ready(function() {
         // Inisialisasi DataTables
-        var table = $('#myTable').DataTable({
-            order: [
-                [3, 'desc'],
-                [4, 'desc']
-            ],
-            orderCellsTop: true
+        $('#myTable').DataTable({
+            "order": [
+                [3, "desc"],
+                [4, "desc"]
+            ], // Urutkan berdasarkan kolom ID (kolom ke-3 dan ke-4) secara descending
+            "orderCellsTop": true
         });
 
         // Inisialisasi Bootstrap Datepicker
@@ -57,17 +56,6 @@
         // Event listener untuk perubahan nilai datepicker
         $('#minDate, #maxDate').change(function() {
             table.draw();
-        });
-    });
-</script>
-<!-- tableUserAdmin -->
-<script>
-    // Wait for the HTML document to finish loading
-    $(document).ready(function() {
-        // Initialize the DataTables plugin on the table with id "myTable"
-        $('#tableUserAdmin').DataTable({
-            order: [0, 'asc'],
-            orderCellsTop: true
         });
     });
 </script>

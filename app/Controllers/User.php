@@ -39,12 +39,11 @@ class User extends BaseController
         $data = [
             'user' => $user,
             'pegawai' => $modelPegawai->getPegawai(),
+            'filtered_pegawai' => $filtered_pegawai,
             'title' => 'Daftar User:',
         ];
 
-        return view('templates/header', $data)
-            . view('user/view', ['filtered_pegawai' => $filtered_pegawai])
-            . view('templates/footer');
+        return view('user/view', $data);
     }
 
     public function profile()
