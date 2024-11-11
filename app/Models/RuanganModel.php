@@ -23,8 +23,8 @@ class RuanganModel extends Model
     {
         if ($id === false) {
             // Menggunakan whereNotIn untuk mengecualikan ruangan "auditorial"
-            // return $this->whereNotIn('nama', ['auditorial', 'pelayanan'])->findAll();
-            return $this->whereNotIn('nama', ['sekretaris'])->findAll();
+            return $this->whereNotIn('nama', ['auditorial', 'sekretaris'])->findAll();
+            // return $this->whereNotIn('nama', ['sekretaris'])->findAll();
         }
 
         return $this->where(['id' => $id])->first();
