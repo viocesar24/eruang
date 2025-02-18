@@ -56,6 +56,9 @@ $routes->match(['get', 'post'], 'signupadmin', [User::class, 'signupadmin']);
 
 $routes->match(['get', 'post'], 'ruangan', [Ruangan::class, 'index']);
 $routes->match(['get', 'post'], 'ruangan/create', [Ruangan::class, 'create']);
+$routes->match(['get', 'post'], 'ruangan/edit/(:segment)', [Ruangan::class, 'edit']);
+$routes->match(['get', 'post'], 'ruangan/update/(:segment)', [Ruangan::class, 'update']);
+$routes->match(['get', 'post'], 'ruangan/delete/(:segment)', [Ruangan::class, 'delete']);
 
 $routes->match(['get', 'post'], 'pegawai', [Pegawai::class, 'index']);
 $routes->match(['get', 'post'], 'pegawai/create', [Pegawai::class, 'create']);

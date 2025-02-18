@@ -8,9 +8,6 @@ use App\Models\PegawaiModel;
 use App\Models\RuanganModel;
 use App\Models\UserModel;
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
 class Peminjaman extends BaseController
 {
     protected $session;
@@ -34,7 +31,7 @@ class Peminjaman extends BaseController
         if (session()->get('pegawai_id') == 58 || session()->get('pegawai_id') == 35) {
             $data = [
                 'peminjaman' => $model->where('tanggal >=', $tanggal_sebulan_lalu)->getPeminjaman(),
-                'ruangan' => $modelRuangan->getRuangan(),
+                'ruangan' => $modelRuangan->getRuangan(false, true),
                 'title' => 'Daftar Peminjaman Semua User',
             ];
         }
@@ -42,7 +39,7 @@ class Peminjaman extends BaseController
         elseif (!session()->has('user_id') || (session()->has('user_id') && session()->get('pegawai_id') != 58 && session()->get('pegawai_id') != 35)) {
             $data = [
                 'peminjaman' => $model->where('tanggal >=', date('Y-m-d'))->getPeminjaman(),
-                'ruangan' => $modelRuangan->getRuangan(),
+                'ruangan' => $modelRuangan->getRuangan(false, true),
                 'title' => 'Daftar Peminjaman Semua User',
             ];
         }
@@ -67,7 +64,7 @@ class Peminjaman extends BaseController
 
         $data = [
             'peminjaman' => $modelPeminjaman->where('tanggal >=', date('Y-m-d'))->getPeminjamanByUser(),
-            'ruangan' => $modelRuangan->getRuangan(),
+            'ruangan' => $modelRuangan->getRuangan(false, true),
             'title' => 'Buat ruangan',
         ];
 
@@ -85,7 +82,7 @@ class Peminjaman extends BaseController
 
         $data = [
             'peminjaman' => $modelPeminjaman->getPeminjaman($id),
-            'ruangan' => $modelRuangan->getRuangan(),
+            'ruangan' => $modelRuangan->getRuangan(false, true),
             'title' => 'Buat ruangan',
         ];
 
@@ -112,7 +109,7 @@ class Peminjaman extends BaseController
         $data = [
             'user' => $modelUser->getUserWithPegawai(),
             'pegawai' => $modelPegawai->getPegawai(),
-            'ruangan' => $modelRuangan->getRuangan(),
+            'ruangan' => $modelRuangan->getRuangan(false, true),
             'title' => 'Buat ruangan',
         ];
 
@@ -260,7 +257,7 @@ class Peminjaman extends BaseController
         $data = [
             'user' => $modelUser->getUserWithPegawai(),
             'pegawai' => $modelPegawai->getPegawai(),
-            'ruangan' => $modelRuangan->getRuangan(),
+            'ruangan' => $modelRuangan->getRuangan(false, true),
             'title' => 'Buat ruangan',
         ];
 

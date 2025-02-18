@@ -46,6 +46,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/user">User</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/ruangan">Ruangan</a>
+                                </li>
                             <?php } ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="/logout">Keluar</a>

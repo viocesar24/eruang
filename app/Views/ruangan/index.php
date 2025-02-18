@@ -1,4 +1,4 @@
-<h2><?= esc($title) ?></h2>
+<p><a class="btn btn-primary" href="/ruangan/create" role="button">Buat Ruangan</a></p>
 
 <?php if (!empty($ruangan) && is_array($ruangan)) : ?>
 
@@ -8,8 +8,14 @@
 
         <div class="main">
             <?= esc($ruangan_item['nama']) ?>
+            <br>
+            Status: <?= esc($ruangan_item['status']) ?>
         </div>
-        <p><a href="/ruangan/<?= esc($ruangan_item['id'], 'url') ?>">Lihat Ruangan</a></p>
+        <p>
+            <a href="/ruangan/<?= esc($ruangan_item['id'], 'url') ?>">Lihat Ruangan</a> |
+            <a href="/ruangan/edit/<?= esc($ruangan_item['id'], 'url') ?>">Edit Status</a> |
+            <a href="/ruangan/delete/<?= esc($ruangan_item['id'], 'url') ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus ruangan ini?')">Hapus</a>
+        </p>
 
     <?php endforeach ?>
 
